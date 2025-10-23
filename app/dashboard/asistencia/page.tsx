@@ -72,8 +72,28 @@ export default function AsistenciaPage() {
           </div>
           <Card>
             <CardHeader>
-              <CardTitle>{t("attendance.studentsList")}</CardTitle>
-              <CardDescription>{t("attendance.selectGroupSubject")}</CardDescription>
+              <CardTitle>{"Selecciona un grup i una assignatura"}</CardTitle>
+              <div className="flex space-x-2">
+                <select className="border border-gray-300 p-2 rounded" defaultValue="">
+                  <option disabled value="">Grups</option>
+                  <option value="1a">1 A</option>
+                  <option value="1b">1 B</option>
+                  <option value="4a">4 A</option>
+                  <option value="4b">4 B</option>
+                  <option value="1bta">BT1 A</option>
+                  <option value="1btb">BT1 B</option>
+                </select>
+
+                <select defaultValue="">
+                  <option disabled value="">Assignatures</option>
+                  <option value="catala">Llengua Catalana</option>
+                  <option value="castella">Llengua Castellana</option>
+                  <option value="matematiques">Matemàtiques</option>
+                  <option value="historia">Història</option>
+                  <option value="musica">Música</option>
+                  <option value="biologia">Biologia</option>
+                </select>
+              </div>
             </CardHeader>
             <CardContent>
               <p className="text-center text-muted-foreground py-8">{t("attendance.selectGroupToViewList")}</p>
