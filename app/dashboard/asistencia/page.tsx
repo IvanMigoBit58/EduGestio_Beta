@@ -77,7 +77,11 @@ export default function AsistenciaPage() {
             <CardHeader>
               <CardTitle>{"Selecciona un grup i una assignatura"}</CardTitle>
               <div className="flex space-x-2">
-                <select className="border border-gray-300 p-2 rounded" defaultValue="">
+                <select
+                  className="border border-gray-300 p-2 rounded"
+                  value={selectedGroup}
+                  onChange={(e) => setSelectedGroup(e.target.value)}
+                >
                   <option disabled value="">Grups</option>
                   <option value="1a">1 A</option>
                   <option value="1b">1 B</option>
@@ -99,7 +103,7 @@ export default function AsistenciaPage() {
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-center text-muted-foreground py-8">{t("attendance.selectGroupToViewList")}</p>
+              {renderStudentRows(selectedGroup)}
             </CardContent>
           </Card>
         </TabsContent>
