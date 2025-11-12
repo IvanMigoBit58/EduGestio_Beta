@@ -107,7 +107,7 @@ export default function AsistenciaPage() {
               </div>
             </CardHeader>
             <CardContent>
-              {renderStudentRows(selectedGroup)}
+              {renderStudentRows(selectedGroup, selectedSubject)}
             </CardContent>
           </Card>
         </TabsContent>
