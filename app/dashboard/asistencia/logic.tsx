@@ -33,7 +33,7 @@ export const renderStudentRows = (groupId: string) => {
       {students.map((student) => (
         <div
           key={student.id}
-          className="flex items-center justify-between border border-gray-200 rounded-lg p-4 hover:bg-gray-50"
+          className="flex items-center justify-between border border-gray-200 rounded-lg p-4"
         >
           <div className="flex items-center space-x-4">
             <div className="flex-1">
