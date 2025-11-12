@@ -184,7 +184,7 @@ export const renderStudentRows = (
     <div className="space-y-2">
       {students.map((student) => (
         <StudentRow
-          key={student.id}
+          key={`${student.id}_${subject}`}
           student={student}
           groupId={groupId}
           subject={subject}
