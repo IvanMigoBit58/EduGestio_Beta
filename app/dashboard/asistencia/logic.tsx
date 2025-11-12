@@ -44,11 +44,42 @@ export const renderStudentRows = (groupId: string) => {
             </div>
           </div>
           <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              className="w-5 h-5 cursor-pointer"
-              aria-label={`Marcar assistència de ${student.name}`}
-            />
+            <button
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-sm font-medium"
+              aria-label={`Marcar assistència (A) de ${student.name}`}
+            >
+              A
+            </button>
+            <button
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-sm font-medium"
+              aria-label={`Marcar retard (R) de ${student.name}`}
+            >
+              R
+            </button>
+            <button
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-sm font-medium"
+              aria-label={`Marcar falta injustificada (FI) de ${student.name}`}
+            >
+              FI
+            </button>
+            <button
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-sm font-medium"
+              aria-label={`Marcar falta justificada (FJ) de ${student.name}`}
+            >
+              FJ
+            </button>
+            <button
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-sm font-medium"
+              aria-label={`Marcar excedència (E) de ${student.name}`}
+            >
+              E
+            </button>
+            <button
+              className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 text-sm font-medium"
+              aria-label={`Marcar confinament (C) de ${student.name}`}
+            >
+              C
+            </button>
           </div>
         </div>
       ))}
