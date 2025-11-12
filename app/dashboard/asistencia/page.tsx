@@ -92,7 +92,10 @@ export default function AsistenciaPage() {
                   <option value="1btb">BT1 B</option>
                 </select>
 
-                <select defaultValue="">
+                <select
+                  value={selectedSubject}
+                  onChange={(e) => setSelectedSubject(e.target.value)}
+                >
                   <option disabled value="">Assignatures</option>
                   <option value="catala">Llengua Catalana</option>
                   <option value="castella">Llengua Castellana</option>
