@@ -76,7 +76,12 @@ const StudentRow = ({
   };
 
   const handleRClick = () => {
-    updateRecord({ rCount: record.rCount + 1 });
+    const newRCount = record.rCount + 1;
+    if (newRCount >= 3) {
+      updateRecord({ rCount: 0, fiCount: record.fiCount + 1 });
+    } else {
+      updateRecord({ rCount: newRCount });
+    }
   };
 
   const handleFIClick = () => {
