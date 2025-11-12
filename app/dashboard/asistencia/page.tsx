@@ -12,6 +12,7 @@ import { renderStudentRows } from "./logic"
 export default function AsistenciaPage() {
   const { t } = useI18n()
   const [selectedGroup, setSelectedGroup] = useState<string>("")
+  const [selectedSubject, setSelectedSubject] = useState<string>("")
 
   return (
     <PageLayout title={t("attendance.title")} description={t("attendance.description")}>
