@@ -53,6 +53,12 @@ export function Sidebar({ className }: SidebarProps) {
       active: pathname === "/dashboard/asistencia",
     },
     {
+      label: "Qualificacions",
+      icon: BookOpen,
+      href: "/dashboard/qualificacions",
+      active: pathname === "/dashboard/qualificacions",
+    },
+    {
       label: t("sidebar.schedules"),
       icon: CalendarRange,
       href: "/dashboard/horaris",
