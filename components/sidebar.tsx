@@ -52,13 +52,13 @@ export function Sidebar({ className }: SidebarProps) {
       label: t("sidebar.attendance"),
       icon: Calendar,
       href: "/dashboard/asistencia",
-      active: pathname === "/dashboard/asistencia" && !pathname.includes("?"),
+      active: pathname === "/dashboard/asistencia" && !searchParams.get("tab"),
       submenu: [
         {
           label: t("attendance.convalidations"),
           icon: Calendar,
           href: "/dashboard/asistencia?tab=convalidaciones",
-          active: pathname === "/dashboard/asistencia" && typeof window !== "undefined" && new URLSearchParams(window.location.search).get("tab") === "convalidaciones",
+          active: pathname === "/dashboard/asistencia" && searchParams.get("tab") === "convalidaciones",
         },
       ],
     },
