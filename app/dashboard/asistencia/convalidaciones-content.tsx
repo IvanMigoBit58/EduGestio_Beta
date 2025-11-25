@@ -141,7 +141,7 @@ export function ConvalidacionesContent() {
         <Card>
           <CardHeader>
             <CardTitle>
-              Estudiantsde {currentGroup.name} - {SUBJECTS.find((s) => s.id === selectedSubject)?.name}
+              Estudiants de {currentGroup.name} - {SUBJECTS.find((s) => s.id === selectedSubject)?.name}
             </CardTitle>
           </CardHeader>
           <CardContent>
