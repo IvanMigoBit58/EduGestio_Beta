@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSearchParams } from "next/navigation"
 import { PageLayout } from "@/components/page-layout"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,8 +12,17 @@ import { renderStudentRows } from "./logic"
 
 export default function AsistenciaPage() {
   const { t } = useI18n()
+  const searchParams = useSearchParams()
   const [selectedGroup, setSelectedGroup] = useState<string>("")
   const [selectedSubject, setSelectedSubject] = useState<string>("")
+  const [defaultTab, setDefaultTab] = useState<string>("lista")
+
+  useEffect(() => {
+    const tab = searchParams.get("tab")
+    if (tab) {
+      setDefaultTab(tab)
+    }
+  }, [searchParams])
 
   return (
     <PageLayout title={t("attendance.title")} description={t("attendance.description")}>
