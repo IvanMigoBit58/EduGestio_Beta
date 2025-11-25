@@ -64,6 +64,7 @@ export default function AsistenciaPage() {
           <TabsTrigger value="lista">{t("attendance.completeList")}</TabsTrigger>
           <TabsTrigger value="grupos">{t("attendance.splitGroups")}</TabsTrigger>
           <TabsTrigger value="historial">{t("attendance.history")}</TabsTrigger>
+          <TabsTrigger value="convalidaciones">{t("attendance.convalidations")}</TabsTrigger>
         </TabsList>
         <TabsContent value="lista" className="space-y-4 mt-4">
           <div className="flex justify-between items-center">
