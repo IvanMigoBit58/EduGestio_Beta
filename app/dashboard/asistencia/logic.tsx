@@ -178,11 +178,28 @@ export const renderStudentRows = (
     );
   }
 
+  // Filter out convalidated students
+  let convalidaciones: Array<{ studentId: string; groupId: string; subject: string }> = [];
+  try {
+    const stored = localStorage.getItem("convalidaciones");
+    if (stored) {
+      convalidaciones = JSON.parse(stored);
+    }
+  } catch (error) {
+    console.error("Failed to parse convalidaciones", error);
+  }
+
+  const filteredStudents = students.filter((student) => {
+    return !convalidaciones.some(
+      (c) => c.studentId === student.id && c.groupId === groupId && c.subject === subject
+    );
+  });
+
   const recordsKey = `attendance_${groupId}_${subject || "general"}`;
 
   return (
     <div className="space-y-2">
-      {students.map((student) => (
+      {filteredStudents.map((student) => (
         <StudentRow
           key={`${student.id}_${subject}`}
           student={student}
