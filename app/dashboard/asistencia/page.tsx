@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Calendar, Clock, Users } from "lucide-react"
 import { useI18n } from "@/lib/i18n-context"
 import { renderStudentRows } from "./logic"
+import { ConvalidacionesContent } from "./convalidaciones-content"
 
 export default function AsistenciaPage() {
   const { t } = useI18n()
