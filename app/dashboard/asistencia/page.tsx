@@ -146,15 +146,7 @@ export default function AsistenciaPage() {
           </Card>
         </TabsContent>
         <TabsContent value="convalidaciones" className="mt-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("attendance.convalidationsTitle")}</CardTitle>
-              <CardDescription>{t("attendance.manageConvalidations")}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-center text-muted-foreground py-8">{t("attendance.selectStudentForConvalidation")}</p>
-            </CardContent>
-          </Card>
+          <ConvalidacionesContent />
         </TabsContent>
       </Tabs>
     </PageLayout>
