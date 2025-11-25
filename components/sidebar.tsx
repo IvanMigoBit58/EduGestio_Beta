@@ -194,56 +194,62 @@ export function Sidebar({ className }: SidebarProps) {
         </Link>
         <ScrollArea className="h-[calc(100vh-8rem)] pr-2">
           <div className="space-y-1">
-            {routes.map((route) => (
-              <div key={route.href}>
-                <Link
-                  href={route.href}
-                  className={cn(
-                    "text-sm group flex p-3 w-full justify-between items-center font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition",
-                    route.active ? "text-primary bg-primary/10" : "text-gray-500 dark:text-gray-400",
-                  )}
-                >
-                  <div className="flex items-center flex-1">
-                    <route.icon
-                      className={cn("h-5 w-5 mr-3", route.active ? "text-primary" : "text-gray-500 dark:text-gray-400")}
-                    />
-                    {route.label}
-                  </div>
-                  {route.submenu && (
-                    <ChevronDown
-                      className={cn(
-                        "h-4 w-4 transition-transform",
-                        route.active ? "text-primary transform rotate-180" : "text-gray-500 dark:text-gray-400",
-                      )}
-                    />
-                  )}
-                </Link>
-                {route.submenu && route.active && (
-                  <div className="ml-6 mt-1 space-y-1">
-                    {route.submenu.map((subitem) => (
-                      <Link
-                        key={subitem.href}
-                        href={subitem.href}
+            {routes.map((route) => {
+              const hasActiveChild = route.submenu?.some((subitem) => subitem.active) ?? false
+              const showSubmenu = route.active || hasActiveChild
+              const parentIsHighlighted = route.active && !hasActiveChild
+
+              return (
+                <div key={route.href}>
+                  <Link
+                    href={route.href}
+                    className={cn(
+                      "text-sm group flex p-3 w-full justify-between items-center font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition",
+                      parentIsHighlighted ? "text-primary bg-primary/10" : "text-gray-500 dark:text-gray-400",
+                    )}
+                  >
+                    <div className="flex items-center flex-1">
+                      <route.icon
+                        className={cn("h-5 w-5 mr-3", parentIsHighlighted ? "text-primary" : "text-gray-500 dark:text-gray-400")}
+                      />
+                      {route.label}
+                    </div>
+                    {route.submenu && (
+                      <ChevronDown
                         className={cn(
-                          "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition",
-                          subitem.active ? "text-primary bg-primary/10" : "text-gray-500 dark:text-gray-400",
+                          "h-4 w-4 transition-transform",
+                          showSubmenu ? "text-primary transform rotate-180" : "text-gray-500 dark:text-gray-400",
                         )}
-                      >
-                        <div className="flex items-center flex-1">
-                          <subitem.icon
-                            className={cn(
-                              "h-4 w-4 mr-3",
-                              subitem.active ? "text-primary" : "text-gray-500 dark:text-gray-400",
-                            )}
-                          />
-                          {subitem.label}
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                      />
+                    )}
+                  </Link>
+                  {route.submenu && showSubmenu && (
+                    <div className="ml-6 mt-1 space-y-1">
+                      {route.submenu.map((subitem) => (
+                        <Link
+                          key={subitem.href}
+                          href={subitem.href}
+                          className={cn(
+                            "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition",
+                            subitem.active ? "text-primary bg-primary/10" : "text-gray-500 dark:text-gray-400",
+                          )}
+                        >
+                          <div className="flex items-center flex-1">
+                            <subitem.icon
+                              className={cn(
+                                "h-4 w-4 mr-3",
+                                subitem.active ? "text-primary" : "text-gray-500 dark:text-gray-400",
+                              )}
+                            />
+                            {subitem.label}
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </ScrollArea>
       </div>
