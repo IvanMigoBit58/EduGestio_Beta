@@ -38,7 +38,7 @@
     "search": "Buscar",
     "filter": "Filtrar",
     "view": "Ver",
-    "add": "A��adir",
+    "add": "Añadir",
     "remove": "Eliminar",
     "yes": "Sí",
     "no": "No",
@@ -268,7 +268,9 @@
     "selectStudentOrGroup": "Selecciona un estudiant o grup per veure el seu històric d'assistència",
     "convalidationsTitle": "Convalidacions d'Assistència",
     "manageConvalidations": "Gestiona les convalidacions d'assistència",
-    "selectStudentForConvalidation": "Selecciona un estudiant per gestionar les seves convalidacions"
+    "selectStudentForConvalidation": "Selecciona un estudiant per gestionar les seves convalidacions",
+    "groups": "Grups",
+    "subjects": "Assignatures"
   },
   "communications": {
     "title": "Comunicacions",
@@ -672,7 +674,7 @@
     "updateDeviceStatus": "Actualitza l'estat dels dispositius",
     "assignEquipment": "Assigna equipament a aules o persones",
     "generateInventoryReports": "Genera informes d'inventari",
-    "manageTechnicalIncidents": "Gestiona les incidències tècniques",
+    "manageTechnicalIncidents": "Gestiona les incid��ncies tècniques",
     "accessInventory": "Accedir a Inventari",
     "reservableEquipment": "Equipament Reservable",
     "reservableDescription": "Gestiona i reserva equipament digital per a ús",
@@ -818,7 +820,7 @@
     "organizationalStructure": "Estructura Organitzativa",
     "editStructure": "Editar Estructura",
     "managementTeam": "Equip Directiu",
-    "managementDescription": "Direcció i coordinació del centre",
+    "managementDescription": "Direcci�� i coordinació del centre",
     "director": "Director/a:",
     "headOfStudies": "Jefe/a de Estudios:",
     "secretary": "Secretario/a:",
