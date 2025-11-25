@@ -35,8 +35,20 @@ export function ConvalidacionesContent() {
   const { t } = useI18n()
   const [selectedGroup, setSelectedGroup] = useState<string>("")
   const [selectedSubject, setSelectedSubject] = useState<string>("")
-  const [convalidaciones, setConvalidaciones] = useState<Convalidacion[]>(convalidacionesData)
+  const [convalidaciones, setConvalidaciones] = useState<Convalidacion[]>([])
   const [view, setView] = useState<"groups" | "subjects">("groups")
+
+  useEffect(() => {
+    // Load from localStorage on component mount
+    try {
+      const stored = localStorage.getItem("convalidaciones")
+      if (stored) {
+        setConvalidaciones(JSON.parse(stored))
+      }
+    } catch (error) {
+      console.error("Failed to load convalidaciones", error)
+    }
+  }, [])
 
   const currentGroup = selectedGroup ? (groupsData.groups as GroupData[]).find((g) => g.id === selectedGroup) : null
 
