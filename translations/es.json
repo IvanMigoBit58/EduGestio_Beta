@@ -38,7 +38,7 @@
     "search": "Buscar",
     "filter": "Filtrar",
     "view": "Ver",
-    "add": "Añadir",
+    "add": "A��adir",
     "remove": "Eliminar",
     "yes": "Sí",
     "no": "No",
@@ -253,6 +253,7 @@
     "completeList": "Llista completa",
     "splitGroups": "Grups desdoblats",
     "history": "Històric",
+    "convalidations": "Convalidacions",
     "today": "Avui",
     "thisWeek": "Aquesta setmana",
     "thisMonth": "Aquest mes",
@@ -264,7 +265,10 @@
     "selectSplitGroup": "Selecciona un grup desdoblat per gestionar la seva assistència",
     "attendanceHistory": "Històric d'assistència",
     "checkHistoryByStudentOrGroup": "Consulta l'històric d'assistència per estudiant o grup",
-    "selectStudentOrGroup": "Selecciona un estudiant o grup per veure el seu històric d'assistència"
+    "selectStudentOrGroup": "Selecciona un estudiant o grup per veure el seu històric d'assistència",
+    "convalidationsTitle": "Convalidacions d'Assistència",
+    "manageConvalidations": "Gestiona les convalidacions d'assistència",
+    "selectStudentForConvalidation": "Selecciona un estudiant per gestionar les seves convalidacions"
   },
   "communications": {
     "title": "Comunicacions",
