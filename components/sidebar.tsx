@@ -28,6 +28,7 @@ import {
   LogOut,
   DoorOpen,
   Settings,
+  ChevronDown,
 } from "lucide-react"
 
 interface SidebarProps {
