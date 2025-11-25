@@ -199,7 +199,7 @@ export function Sidebar({ className }: SidebarProps) {
                 <Link
                   href={route.href}
                   className={cn(
-                    "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition",
+                    "text-sm group flex p-3 w-full justify-between items-center font-medium cursor-pointer hover:text-primary hover:bg-primary/10 rounded-lg transition",
                     route.active ? "text-primary bg-primary/10" : "text-gray-500 dark:text-gray-400",
                   )}
                 >
@@ -209,6 +209,14 @@ export function Sidebar({ className }: SidebarProps) {
                     />
                     {route.label}
                   </div>
+                  {route.submenu && (
+                    <ChevronDown
+                      className={cn(
+                        "h-4 w-4 transition-transform",
+                        route.active ? "text-primary transform rotate-180" : "text-gray-500 dark:text-gray-400",
+                      )}
+                    />
+                  )}
                 </Link>
                 {route.submenu && route.active && (
                   <div className="ml-6 mt-1 space-y-1">
