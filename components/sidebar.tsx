@@ -37,6 +37,7 @@ interface SidebarProps {
 
 export function Sidebar({ className }: SidebarProps) {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
   const { t } = useI18n()
   const { logout } = useAuth()
 
