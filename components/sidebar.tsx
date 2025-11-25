@@ -56,8 +56,8 @@ export function Sidebar({ className }: SidebarProps) {
         {
           label: t("attendance.convalidations"),
           icon: Calendar,
-          href: "/dashboard/asistencia?tab=convalidaciones",
-          active: pathname === "/dashboard/asistencia" && typeof window !== "undefined" && new URLSearchParams(window.location.search).get("tab") === "convalidaciones",
+          href: "/dashboard/asistencia",
+          active: pathname === "/dashboard/asistencia",
         },
       ],
     },
