@@ -268,7 +268,9 @@
     "selectStudentOrGroup": "Selecciona un estudiant o grup per veure el seu historial d'assistència",
     "convalidationsTitle": "Convalidacions d'Assistència",
     "manageConvalidations": "Gestiona les convalidacions d'assistència",
-    "selectStudentForConvalidation": "Selecciona un estudiant per gestionar les seves convalidacions"
+    "selectStudentForConvalidation": "Selecciona un estudiant per gestionar les seves convalidacions",
+    "groups": "Grups",
+    "subjects": "Assignatures"
   },
   "communications": {
     "title": "Comunicacions",
@@ -643,7 +645,7 @@
     "myCompletedGuards": "Les Meves Guàrdies Realitzades",
     "yourCompletedGuards": "Les teves guàrdies completades",
     "completed": "Completada",
-    "upcomingGuards": "Properes Guàrdies",
+    "upcomingGuards": "Properes Gu��rdies",
     "assignedPendingGuards": "Guàrdies assignades pendents",
     "today": "Avui",
     "completeGuardsHistory": "Historial Complet de Guàrdies",
