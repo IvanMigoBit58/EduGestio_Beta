@@ -159,7 +159,7 @@ export function ConvalidacionesContent() {
                   <Button
                     variant={isConvalidated(student.id) ? "default" : "outline"}
                     size="sm"
-                    onClick={() => handleToggleConvalidacio(student.id)}
+                    onClick={() => handleToggleConvalidacion(student.id)}
                     className={isConvalidated(student.id) ? "bg-green-600 hover:bg-green-700" : ""}
                   >
                     {isConvalidated(student.id) ? "✓ Convalidat" : "Convalidat"}
