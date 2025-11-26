@@ -144,19 +144,13 @@ export function ConvalidacionesContent() {
               </select>
             </div>
           )}
-        </CardContent>
-      </Card>
 
-      {selectedGroup && selectedSubject && currentGroup && (
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              Estudiants de {currentGroup.name} - {SUBJECTS.find((s) => s.id === selectedSubject)?.name}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {currentGroup.students.map((student) => (
+          {selectedGroup && selectedSubject && (
+            <div className="space-y-2 mt-4">
+              <div className="text-sm font-medium">
+                Estudiants de {currentGroup?.name} - {SUBJECTS.find((s) => s.id === selectedSubject)?.name}
+              </div>
+              {currentGroup?.students.map((student) => (
                 <div
                   key={student.id}
                   className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900"
@@ -177,17 +171,9 @@ export function ConvalidacionesContent() {
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {(!selectedGroup || !selectedSubject) && (
-        <Card>
-          <CardContent className="py-8">
-            <p className="text-center text-muted-foreground">{t("attendance.selectStudentForConvalidation")}</p>
-          </CardContent>
-        </Card>
-      )}
+          )}
+        </CardContent>
+      </Card>
     </div>
   )
 }
