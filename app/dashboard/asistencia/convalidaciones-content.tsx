@@ -86,7 +86,7 @@ export function ConvalidacionesContent() {
       <Card>
         <CardHeader>
           <CardTitle>Convalidacions</CardTitle>
-          <CardDescription>{t("attendance.manageConvalidations")}</CardDescription>
+          <CardDescription>Gestiona les convalidacions</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex gap-2">
