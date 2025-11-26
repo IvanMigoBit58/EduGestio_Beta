@@ -16,12 +16,14 @@ export default function AsistenciaPage() {
   const searchParams = useSearchParams()
   const [selectedGroup, setSelectedGroup] = useState<string>("")
   const [selectedSubject, setSelectedSubject] = useState<string>("")
-  const [defaultTab, setDefaultTab] = useState<string>("lista")
+  const [activeTab, setActiveTab] = useState<string>("lista")
 
   useEffect(() => {
     const tab = searchParams.get("tab")
     if (tab) {
-      setDefaultTab(tab)
+      setActiveTab(tab)
+    } else {
+      setActiveTab("lista")
     }
   }, [searchParams])
 
