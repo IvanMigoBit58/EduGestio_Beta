@@ -85,7 +85,7 @@ export function ConvalidacionesContent() {
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle>{t("attendance.convalidationsTitle")}</CardTitle>
+          <CardTitle>Convalidacions</CardTitle>
           <CardDescription>{t("attendance.manageConvalidations")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
