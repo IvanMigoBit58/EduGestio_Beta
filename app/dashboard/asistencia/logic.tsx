@@ -92,10 +92,6 @@ const StudentRow = ({
     updateRecord({ fiCount: record.fiCount + 1 });
   };
 
-  const handleCClick = () => {
-    if (isConvalidated) return;
-    updateRecord({ isConfinedC: !record.isConfinedC });
-  };
 
   const rowClassName = isConvalidated
     ? "flex items-center justify-between border border-gray-200 rounded-lg p-4 bg-gray-200 dark:bg-gray-700 opacity-70"
