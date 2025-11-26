@@ -150,66 +150,26 @@ export function ConvalidacionesContent() {
               <div className="text-sm font-medium">
                 Estudiants de {currentGroup?.name} - {SUBJECTS.find((s) => s.id === selectedSubject)?.name}
               </div>
-              {(() => {
-                const regularStudents = currentGroup?.students.filter(
-                  (student) => !isConvalidated(student.id)
-                ) || []
-                const convalidatedStudents = currentGroup?.students.filter((student) =>
-                  isConvalidated(student.id)
-                ) || []
-
-                return (
-                  <>
-                    {regularStudents.map((student) => (
-                      <div
-                        key={student.id}
-                        className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900"
-                      >
-                        <div>
-                          <p className="font-medium">
-                            {student.name} {student.surname}
-                          </p>
-                        </div>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleToggleConvalidacion(student.id)}
-                        >
-                          Convalidat
-                        </Button>
-                      </div>
-                    ))}
-
-                    {convalidatedStudents.length > 0 && (
-                      <>
-                        <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-6 mb-2">
-                          Convalidats
-                        </div>
-                        {convalidatedStudents.map((student) => (
-                          <div
-                            key={student.id}
-                            className="flex items-center justify-between p-3 border rounded-lg bg-gray-200 dark:bg-gray-700 opacity-70"
-                          >
-                            <div>
-                              <p className="font-medium text-gray-600 dark:text-gray-300">
-                                {student.name} {student.surname}
-                              </p>
-                            </div>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              disabled
-                              className="cursor-not-allowed opacity-50"
-                            >
-                              ✓ Convalidat
-                            </Button>
-                          </div>
-                        ))}
-                      </>
-                    )}
-                  </>
-                )
-              })()}
+              {currentGroup?.students.map((student) => (
+                <div
+                  key={student.id}
+                  className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900"
+                >
+                  <div>
+                    <p className="font-medium">
+                      {student.name} {student.surname}
+                    </p>
+                  </div>
+                  <Button
+                    variant={isConvalidated(student.id) ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => handleToggleConvalidacion(student.id)}
+                    className={isConvalidated(student.id) ? "bg-green-600 hover:bg-green-700" : ""}
+                  >
+                    {isConvalidated(student.id) ? "✓ Convalidat" : "Convalidat"}
+                  </Button>
+                </div>
+              ))}
             </div>
           )}
         </CardContent>
