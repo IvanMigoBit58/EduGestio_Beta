@@ -32,11 +32,13 @@ const StudentRow = ({
   groupId,
   subject,
   recordsKey,
+  isConvalidated = false,
 }: {
   student: Student;
   groupId: string;
   subject: string;
   recordsKey: string;
+  isConvalidated?: boolean;
 }) => {
   const [record, setRecord] = useState<AttendanceRecord>({
     studentId: student.id,
@@ -76,6 +78,7 @@ const StudentRow = ({
   };
 
   const handleRClick = () => {
+    if (isConvalidated) return;
     const newRCount = record.rCount + 1;
     if (newRCount >= 3) {
       updateRecord({ rCount: 0, fiCount: record.fiCount + 1 });
@@ -85,74 +88,105 @@ const StudentRow = ({
   };
 
   const handleFIClick = () => {
+    if (isConvalidated) return;
     updateRecord({ fiCount: record.fiCount + 1 });
   };
 
   const handleCClick = () => {
+    if (isConvalidated) return;
     updateRecord({ isConfinedC: !record.isConfinedC });
   };
 
+  const rowClassName = isConvalidated
+    ? "flex items-center justify-between border border-gray-200 rounded-lg p-4 bg-gray-200 dark:bg-gray-700 opacity-70"
+    : "flex items-center justify-between border border-gray-200 rounded-lg p-4";
+
+  const buttonClassName =
+    "w-8 h-8 rounded-full border flex items-center justify-center text-sm font-medium transition-colors";
+
+  const disabledButtonClassName = isConvalidated
+    ? "border-gray-300 cursor-not-allowed opacity-50"
+    : "border-gray-300 hover:bg-green-500 hover:text-white";
+
   return (
-    <div className="flex items-center justify-between border border-gray-200 rounded-lg p-4">
+    <div className={rowClassName}>
       <div className="flex items-center space-x-4">
         <div className="flex-1">
-          <p className="font-medium">
+          <p className={`font-medium ${isConvalidated ? "text-gray-600 dark:text-gray-300" : ""}`}>
             {student.name} {student.surname}
           </p>
-          <p className="text-sm text-muted-foreground">{student.id}</p>
+          <p className={`text-sm ${isConvalidated ? "text-gray-500 dark:text-gray-400" : "text-muted-foreground"}`}>
+            {student.id}
+          </p>
         </div>
       </div>
       <div className="flex items-center space-x-4">
         <div className="flex items-center space-x-1">
-          <span className="text-xs text-muted-foreground">R:</span>
-          <span className="text-sm font-medium w-6 text-center">{record.rCount}</span>
+          <span className={`text-xs ${isConvalidated ? "text-gray-500 dark:text-gray-400" : "text-muted-foreground"}`}>
+            R:
+          </span>
+          <span className={`text-sm font-medium w-6 text-center ${isConvalidated ? "text-gray-600 dark:text-gray-300" : ""}`}>
+            {record.rCount}
+          </span>
         </div>
         <div className="flex items-center space-x-1">
-          <span className="text-xs text-muted-foreground">FI:</span>
-          <span className="text-sm font-medium w-6 text-center">{record.fiCount}</span>
+          <span className={`text-xs ${isConvalidated ? "text-gray-500 dark:text-gray-400" : "text-muted-foreground"}`}>
+            FI:
+          </span>
+          <span className={`text-sm font-medium w-6 text-center ${isConvalidated ? "text-gray-600 dark:text-gray-300" : ""}`}>
+            {record.fiCount}
+          </span>
         </div>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => {}}
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-green-500 hover:text-white text-sm font-medium"
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "border-gray-300 cursor-not-allowed opacity-50" : "border-gray-300 hover:bg-green-500 hover:text-white"}`}
             aria-label={`Marcar assistència (A) de ${student.name}`}
           >
             A
           </button>
           <button
             onClick={handleRClick}
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-orange-500 hover:text-white text-sm font-medium"
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "border-gray-300 cursor-not-allowed opacity-50" : "border-gray-300 hover:bg-orange-500 hover:text-white"}`}
             aria-label={`Marcar retard (R) de ${student.name}`}
           >
             R
           </button>
           <button
             onClick={handleFIClick}
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-red-500 hover:text-white text-sm font-medium"
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "border-gray-300 cursor-not-allowed opacity-50" : "border-gray-300 hover:bg-red-500 hover:text-white"}`}
             aria-label={`Marcar falta injustificada (FI) de ${student.name}`}
           >
             FI
           </button>
           <button
             onClick={() => {}}
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-cyan-500 hover:text-white text-sm font-medium"
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "border-gray-300 cursor-not-allowed opacity-50" : "border-gray-300 hover:bg-cyan-500 hover:text-white"}`}
             aria-label={`Marcar falta justificada (FJ) de ${student.name}`}
           >
             FJ
           </button>
           <button
             onClick={() => {}}
-            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-purple-500 hover:text-white text-sm font-medium"
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "border-gray-300 cursor-not-allowed opacity-50" : "border-gray-300 hover:bg-purple-500 hover:text-white"}`}
             aria-label={`Marcar excedència (E) de ${student.name}`}
           >
             E
           </button>
           <button
             onClick={handleCClick}
-            className={`w-8 h-8 rounded-full border flex items-center justify-center text-sm font-medium transition-colors ${
-              record.isConfinedC
-                ? "bg-gray-300 border-gray-400 text-white"
-                : "border-gray-300 hover:bg-gray-300"
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${
+              isConvalidated
+                ? "border-gray-300 cursor-not-allowed opacity-50"
+                : record.isConfinedC
+                  ? "bg-gray-300 border-gray-400 text-white"
+                  : "border-gray-300 hover:bg-gray-300"
             }`}
             aria-label={`Marcar confinament (C) de ${student.name}`}
           >
