@@ -28,7 +28,10 @@ export default function AsistenciaPage() {
   }, [searchParams])
 
   return (
-    <PageLayout title={t("attendance.title")} description={t("attendance.description")}>
+    <PageLayout
+      title={activeTab !== "convalidaciones" ? t("attendance.title") : ""}
+      description={activeTab !== "convalidaciones" ? t("attendance.description") : ""}
+    >
       {activeTab !== "convalidaciones" && (
         <>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
