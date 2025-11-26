@@ -170,28 +170,6 @@ const StudentRow = ({
           >
             FJ
           </button>
-          <button
-            onClick={() => {}}
-            disabled={isConvalidated}
-            className={`${buttonClassName} ${isConvalidated ? "border-gray-300 cursor-not-allowed opacity-50" : "border-gray-300 hover:bg-purple-500 hover:text-white"}`}
-            aria-label={`Marcar excedència (E) de ${student.name}`}
-          >
-            E
-          </button>
-          <button
-            onClick={handleCClick}
-            disabled={isConvalidated}
-            className={`${buttonClassName} ${
-              isConvalidated
-                ? "border-gray-300 cursor-not-allowed opacity-50"
-                : record.isConfinedC
-                  ? "bg-gray-300 border-gray-400 text-white"
-                  : "border-gray-300 hover:bg-gray-300"
-            }`}
-            aria-label={`Marcar confinament (C) de ${student.name}`}
-          >
-            C
-          </button>
         </div>
       </div>
     </div>
