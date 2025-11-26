@@ -72,7 +72,7 @@ export default function AsistenciaPage() {
         </Card>
       </div>
 
-      <Tabs defaultValue={defaultTab} className="mt-6">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-6">
         <TabsList>
           <TabsTrigger value="lista">{t("attendance.completeList")}</TabsTrigger>
           <TabsTrigger value="grupos">{t("attendance.splitGroups")}</TabsTrigger>
