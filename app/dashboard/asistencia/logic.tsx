@@ -212,7 +212,7 @@ export const renderStudentRows = (
     );
   }
 
-  // Filter out convalidated students
+  // Separate convalidated and regular students
   let convalidaciones: Array<{ studentId: string; groupId: string; subject: string }> = [];
   try {
     const stored = localStorage.getItem("convalidaciones");
@@ -223,8 +223,14 @@ export const renderStudentRows = (
     console.error("Failed to parse convalidaciones", error);
   }
 
-  const filteredStudents = students.filter((student) => {
+  const regularStudents = students.filter((student) => {
     return !convalidaciones.some(
+      (c) => c.studentId === student.id && c.groupId === groupId && c.subject === subject
+    );
+  });
+
+  const convalidatedStudents = students.filter((student) => {
+    return convalidaciones.some(
       (c) => c.studentId === student.id && c.groupId === groupId && c.subject === subject
     );
   });
@@ -233,15 +239,33 @@ export const renderStudentRows = (
 
   return (
     <div className="space-y-2">
-      {filteredStudents.map((student) => (
+      {regularStudents.map((student) => (
         <StudentRow
           key={`${student.id}_${subject}`}
           student={student}
           groupId={groupId}
           subject={subject}
           recordsKey={recordsKey}
+          isConvalidated={false}
         />
       ))}
+      {convalidatedStudents.length > 0 && (
+        <>
+          <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-6 mb-2">
+            Convalidats
+          </div>
+          {convalidatedStudents.map((student) => (
+            <StudentRow
+              key={`${student.id}_${subject}`}
+              student={student}
+              groupId={groupId}
+              subject={subject}
+              recordsKey={recordsKey}
+              isConvalidated={true}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };
