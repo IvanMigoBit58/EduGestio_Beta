@@ -87,7 +87,11 @@ const StudentRow = ({
           <button
             onClick={onAClick}
             disabled={isConvalidated}
-            className={`${buttonClassName} ${isConvalidated ? "cursor-not-allowed opacity-50" : "hover:bg-green-500 hover:text-white"}`}
+            className={`${buttonClassName} ${
+              isConvalidated
+                ? "cursor-not-allowed opacity-50"
+                : "border-gray-300 hover:bg-green-500 hover:text-white"
+            }`}
             aria-label={`Marcar assistència (A) de ${student.name}`}
           >
             A
@@ -95,7 +99,11 @@ const StudentRow = ({
           <button
             onClick={onRClick}
             disabled={isConvalidated}
-            className={`${buttonClassName} ${isConvalidated ? "cursor-not-allowed opacity-50" : "hover:bg-orange-500 hover:text-white"}`}
+            className={`${buttonClassName} ${
+              isConvalidated
+                ? "cursor-not-allowed opacity-50"
+                : `border-gray-300 hover:bg-orange-500 hover:text-white ${rCount > 0 ? "bg-orange-500 text-white" : ""}`
+            }`}
             aria-label={`Marcar retard (R) de ${student.name}`}
           >
             R
@@ -103,7 +111,11 @@ const StudentRow = ({
           <button
             onClick={onFClick}
             disabled={isConvalidated}
-            className={`${buttonClassName} ${isConvalidated ? "cursor-not-allowed opacity-50" : "hover:bg-red-500 hover:text-white"}`}
+            className={`${buttonClassName} ${
+              isConvalidated
+                ? "cursor-not-allowed opacity-50"
+                : `border-gray-300 hover:bg-red-500 hover:text-white ${fCount > 0 ? "bg-red-500 text-white" : ""}`
+            }`}
             aria-label={`Marcar falta (F) de ${student.name}`}
           >
             F
