@@ -17,7 +17,8 @@ export interface Group {
 
 export interface AttendanceRecord {
   studentId: string;
-  selected: "R" | "F" | null;
+  rCount: number;
+  fCount: number;
 }
 
 export const getStudentsByGroup = (groupId: string): Student[] => {
@@ -30,50 +31,28 @@ const StudentRow = ({
   groupId,
   subject,
   isConvalidated = false,
-  selected,
-  onSelectionChange,
+  rCount,
+  fCount,
+  onRClick,
+  onFClick,
+  onAClick,
 }: {
   student: Student;
   groupId: string;
   subject: string;
   isConvalidated?: boolean;
-  selected: "R" | "F" | null;
-  onSelectionChange: (value: "R" | "F" | null) => void;
+  rCount: number;
+  fCount: number;
+  onRClick: () => void;
+  onFClick: () => void;
+  onAClick: () => void;
 }) => {
   const rowClassName = isConvalidated
     ? "flex items-center justify-between border border-gray-200 rounded-lg p-4 bg-gray-200 dark:bg-gray-700 opacity-70"
     : "flex items-center justify-between border border-gray-200 rounded-lg p-4";
 
   const buttonClassName =
-    "w-8 h-8 rounded-full border-2 flex items-center justify-center text-sm font-medium transition-colors";
-
-  const getButtonClassName = (value: "R" | "F") => {
-    const isSelected = selected === value;
-    const baseClass = `${buttonClassName}`;
-
-    if (isConvalidated) {
-      return `${baseClass} border-gray-300 cursor-not-allowed opacity-50`;
-    }
-
-    if (value === "R") {
-      return `${baseClass} ${
-        isSelected
-          ? "bg-orange-500 text-white border-orange-600"
-          : "border-gray-300 hover:bg-orange-500 hover:text-white"
-      }`;
-    } else {
-      return `${baseClass} ${
-        isSelected
-          ? "bg-red-500 text-white border-red-600"
-          : "border-gray-300 hover:bg-red-500 hover:text-white"
-      }`;
-    }
-  };
-
-  const handleClick = (value: "R" | "F") => {
-    if (isConvalidated) return;
-    onSelectionChange(selected === value ? null : value);
-  };
+    "w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-sm font-medium transition-colors";
 
   return (
     <div className={rowClassName}>
@@ -87,23 +66,49 @@ const StudentRow = ({
           </p>
         </div>
       </div>
-      <div className="flex items-center space-x-2">
-        <button
-          onClick={() => handleClick("R")}
-          disabled={isConvalidated}
-          className={getButtonClassName("R")}
-          aria-label={`Marcar retard (R) de ${student.name}`}
-        >
-          R
-        </button>
-        <button
-          onClick={() => handleClick("F")}
-          disabled={isConvalidated}
-          className={getButtonClassName("F")}
-          aria-label={`Marcar falta (F) de ${student.name}`}
-        >
-          F
-        </button>
+      <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-1">
+          <span className={`text-xs ${isConvalidated ? "text-gray-500 dark:text-gray-400" : "text-muted-foreground"}`}>
+            R:
+          </span>
+          <span className={`text-sm font-medium w-6 text-center ${isConvalidated ? "text-gray-600 dark:text-gray-300" : ""}`}>
+            {rCount}
+          </span>
+        </div>
+        <div className="flex items-center space-x-1">
+          <span className={`text-xs ${isConvalidated ? "text-gray-500 dark:text-gray-400" : "text-muted-foreground"}`}>
+            F:
+          </span>
+          <span className={`text-sm font-medium w-6 text-center ${isConvalidated ? "text-gray-600 dark:text-gray-300" : ""}`}>
+            {fCount}
+          </span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={onAClick}
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "cursor-not-allowed opacity-50" : "hover:bg-green-500 hover:text-white"}`}
+            aria-label={`Marcar assistència (A) de ${student.name}`}
+          >
+            A
+          </button>
+          <button
+            onClick={onRClick}
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "cursor-not-allowed opacity-50" : "hover:bg-orange-500 hover:text-white"}`}
+            aria-label={`Marcar retard (R) de ${student.name}`}
+          >
+            R
+          </button>
+          <button
+            onClick={onFClick}
+            disabled={isConvalidated}
+            className={`${buttonClassName} ${isConvalidated ? "cursor-not-allowed opacity-50" : "hover:bg-red-500 hover:text-white"}`}
+            aria-label={`Marcar falta (F) de ${student.name}`}
+          >
+            F
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -118,39 +123,59 @@ export const AttendanceListComponent = ({
 }) => {
   const students = getStudentsByGroup(groupId);
   const recordsKey = `attendance_${groupId}_${subject || "general"}`;
-  const [selections, setSelections] = useState<
-    Record<string, "R" | "F" | null>
-  >({});
+  const [records, setRecords] = useState<Record<string, AttendanceRecord>>({});
 
   useEffect(() => {
     const stored = localStorage.getItem(recordsKey);
     if (stored) {
       try {
         const allRecords: AttendanceRecord[] = JSON.parse(stored);
-        const selectionsMap: Record<string, "R" | "F" | null> = {};
+        const recordsMap: Record<string, AttendanceRecord> = {};
         allRecords.forEach((record) => {
-          selectionsMap[record.studentId] = record.selected;
+          recordsMap[record.studentId] = record;
         });
-        setSelections(selectionsMap);
+        setRecords(recordsMap);
       } catch (error) {
-        console.error("Failed to load selections", error);
+        console.error("Failed to load records", error);
       }
     }
   }, [recordsKey]);
 
-  const handleSelectionChange = (studentId: string, value: "R" | "F" | null) => {
-    setSelections((prev) => ({
+  const getRecord = (studentId: string): AttendanceRecord => {
+    return records[studentId] || { studentId, rCount: 0, fCount: 0 };
+  };
+
+  const updateRecord = (studentId: string, updates: Partial<AttendanceRecord>) => {
+    const currentRecord = getRecord(studentId);
+    const newRecord = { ...currentRecord, ...updates };
+    setRecords((prev) => ({
       ...prev,
-      [studentId]: value,
+      [studentId]: newRecord,
     }));
   };
 
+  const handleRClick = (studentId: string) => {
+    const currentRecord = getRecord(studentId);
+    const newRCount = currentRecord.rCount + 1;
+
+    if (newRCount >= 3) {
+      updateRecord(studentId, { rCount: 0, fCount: currentRecord.fCount + 1 });
+    } else {
+      updateRecord(studentId, { rCount: newRCount });
+    }
+  };
+
+  const handleFClick = (studentId: string) => {
+    const currentRecord = getRecord(studentId);
+    updateRecord(studentId, { fCount: currentRecord.fCount + 1 });
+  };
+
   const handleSave = () => {
-    const records: AttendanceRecord[] = students.map((student) => ({
-      studentId: student.id,
-      selected: selections[student.id] || null,
-    }));
-    localStorage.setItem(recordsKey, JSON.stringify(records));
+    const allRecords: AttendanceRecord[] = students.map((student) => {
+      const record = records[student.id];
+      return record || { studentId: student.id, rCount: 0, fCount: 0 };
+    });
+    localStorage.setItem(recordsKey, JSON.stringify(allRecords));
   };
 
   if (!groupId || students.length === 0) {
@@ -185,33 +210,45 @@ export const AttendanceListComponent = ({
 
   return (
     <div className="space-y-2">
-      {regularStudents.map((student) => (
-        <StudentRow
-          key={`${student.id}_${subject}`}
-          student={student}
-          groupId={groupId}
-          subject={subject}
-          isConvalidated={false}
-          selected={selections[student.id] || null}
-          onSelectionChange={(value) => handleSelectionChange(student.id, value)}
-        />
-      ))}
+      {regularStudents.map((student) => {
+        const record = getRecord(student.id);
+        return (
+          <StudentRow
+            key={`${student.id}_${subject}`}
+            student={student}
+            groupId={groupId}
+            subject={subject}
+            isConvalidated={false}
+            rCount={record.rCount}
+            fCount={record.fCount}
+            onRClick={() => handleRClick(student.id)}
+            onFClick={() => handleFClick(student.id)}
+            onAClick={() => {}}
+          />
+        );
+      })}
       {convalidatedStudents.length > 0 && (
         <>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-6 mb-2">
             Convalidats
           </div>
-          {convalidatedStudents.map((student) => (
-            <StudentRow
-              key={`${student.id}_${subject}`}
-              student={student}
-              groupId={groupId}
-              subject={subject}
-              isConvalidated={true}
-              selected={selections[student.id] || null}
-              onSelectionChange={(value) => handleSelectionChange(student.id, value)}
-            />
-          ))}
+          {convalidatedStudents.map((student) => {
+            const record = getRecord(student.id);
+            return (
+              <StudentRow
+                key={`${student.id}_${subject}`}
+                student={student}
+                groupId={groupId}
+                subject={subject}
+                isConvalidated={true}
+                rCount={record.rCount}
+                fCount={record.fCount}
+                onRClick={() => {}}
+                onFClick={() => {}}
+                onAClick={() => {}}
+              />
+            );
+          })}
         </>
       )}
       <button
