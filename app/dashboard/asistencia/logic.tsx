@@ -33,9 +33,10 @@ const StudentRow = ({
   isConvalidated = false,
   rCount,
   fCount,
+  selectedButton,
+  onAClick,
   onRClick,
   onFClick,
-  onAClick,
 }: {
   student: Student;
   groupId: string;
@@ -43,9 +44,10 @@ const StudentRow = ({
   isConvalidated?: boolean;
   rCount: number;
   fCount: number;
+  selectedButton: "A" | "R" | "F" | null;
+  onAClick: () => void;
   onRClick: () => void;
   onFClick: () => void;
-  onAClick: () => void;
 }) => {
   const rowClassName = isConvalidated
     ? "flex items-center justify-between border border-gray-200 rounded-lg p-4 bg-gray-200 dark:bg-gray-700 opacity-70"
@@ -53,6 +55,22 @@ const StudentRow = ({
 
   const buttonClassName =
     "w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-sm font-medium transition-colors";
+
+  const getButtonClass = (buttonType: "A" | "R" | "F") => {
+    if (isConvalidated) {
+      return "cursor-not-allowed opacity-50";
+    }
+
+    const isSelected = selectedButton === buttonType;
+
+    if (buttonType === "A") {
+      return isSelected ? "bg-green-500 text-white border-green-600" : "hover:bg-green-500 hover:text-white";
+    } else if (buttonType === "R") {
+      return isSelected ? "bg-orange-500 text-white border-orange-600" : "hover:bg-orange-500 hover:text-white";
+    } else {
+      return isSelected ? "bg-red-500 text-white border-red-600" : "hover:bg-red-500 hover:text-white";
+    }
+  };
 
   return (
     <div className={rowClassName}>
@@ -87,11 +105,7 @@ const StudentRow = ({
           <button
             onClick={onAClick}
             disabled={isConvalidated}
-            className={`${buttonClassName} ${
-              isConvalidated
-                ? "cursor-not-allowed opacity-50"
-                : "border-gray-300 hover:bg-green-500 hover:text-white"
-            }`}
+            className={`${buttonClassName} ${getButtonClass("A")}`}
             aria-label={`Marcar assistència (A) de ${student.name}`}
           >
             A
@@ -99,11 +113,7 @@ const StudentRow = ({
           <button
             onClick={onRClick}
             disabled={isConvalidated}
-            className={`${buttonClassName} ${
-              isConvalidated
-                ? "cursor-not-allowed opacity-50"
-                : `border-gray-300 hover:bg-orange-500 hover:text-white ${rCount > 0 ? "bg-orange-500 text-white" : ""}`
-            }`}
+            className={`${buttonClassName} ${getButtonClass("R")}`}
             aria-label={`Marcar retard (R) de ${student.name}`}
           >
             R
@@ -111,11 +121,7 @@ const StudentRow = ({
           <button
             onClick={onFClick}
             disabled={isConvalidated}
-            className={`${buttonClassName} ${
-              isConvalidated
-                ? "cursor-not-allowed opacity-50"
-                : `border-gray-300 hover:bg-red-500 hover:text-white ${fCount > 0 ? "bg-red-500 text-white" : ""}`
-            }`}
+            className={`${buttonClassName} ${getButtonClass("F")}`}
             aria-label={`Marcar falta (F) de ${student.name}`}
           >
             F
@@ -136,6 +142,7 @@ export const AttendanceListComponent = ({
   const students = getStudentsByGroup(groupId);
   const recordsKey = `attendance_${groupId}_${subject || "general"}`;
   const [records, setRecords] = useState<Record<string, AttendanceRecord>>({});
+  const [selections, setSelections] = useState<Record<string, "A" | "R" | "F" | null>>({});
 
   useEffect(() => {
     const stored = localStorage.getItem(recordsKey);
@@ -157,37 +164,53 @@ export const AttendanceListComponent = ({
     return records[studentId] || { studentId, rCount: 0, fCount: 0 };
   };
 
-  const updateRecord = (studentId: string, updates: Partial<AttendanceRecord>) => {
-    const currentRecord = getRecord(studentId);
-    const newRecord = { ...currentRecord, ...updates };
-    setRecords((prev) => ({
+  const handleButtonClick = (studentId: string, buttonType: "A" | "R" | "F") => {
+    setSelections((prev) => ({
       ...prev,
-      [studentId]: newRecord,
+      [studentId]: prev[studentId] === buttonType ? null : buttonType,
     }));
   };
 
-  const handleRClick = (studentId: string) => {
-    const currentRecord = getRecord(studentId);
-    const newRCount = currentRecord.rCount + 1;
-
-    if (newRCount >= 3) {
-      updateRecord(studentId, { rCount: 0, fCount: currentRecord.fCount + 1 });
-    } else {
-      updateRecord(studentId, { rCount: newRCount });
-    }
-  };
-
-  const handleFClick = (studentId: string) => {
-    const currentRecord = getRecord(studentId);
-    updateRecord(studentId, { fCount: currentRecord.fCount + 1 });
-  };
-
   const handleSave = () => {
-    const allRecords: AttendanceRecord[] = students.map((student) => {
-      const record = records[student.id];
-      return record || { studentId: student.id, rCount: 0, fCount: 0 };
+    const updatedRecords = { ...records };
+
+    students.forEach((student) => {
+      const selection = selections[student.id];
+      const currentRecord = getRecord(student.id);
+
+      if (selection === "R") {
+        const newRCount = currentRecord.rCount + 1;
+        if (newRCount >= 3) {
+          updatedRecords[student.id] = {
+            studentId: student.id,
+            rCount: 0,
+            fCount: currentRecord.fCount + 1,
+          };
+        } else {
+          updatedRecords[student.id] = {
+            studentId: student.id,
+            rCount: newRCount,
+            fCount: currentRecord.fCount,
+          };
+        }
+      } else if (selection === "F") {
+        updatedRecords[student.id] = {
+          studentId: student.id,
+          rCount: currentRecord.rCount,
+          fCount: currentRecord.fCount + 1,
+        };
+      }
     });
+
+    setRecords(updatedRecords);
+
+    const allRecords: AttendanceRecord[] = students.map(
+      (student) =>
+        updatedRecords[student.id] || { studentId: student.id, rCount: 0, fCount: 0 }
+    );
     localStorage.setItem(recordsKey, JSON.stringify(allRecords));
+
+    setSelections({});
   };
 
   if (!groupId || students.length === 0) {
@@ -233,9 +256,10 @@ export const AttendanceListComponent = ({
             isConvalidated={false}
             rCount={record.rCount}
             fCount={record.fCount}
-            onRClick={() => handleRClick(student.id)}
-            onFClick={() => handleFClick(student.id)}
-            onAClick={() => {}}
+            selectedButton={selections[student.id] || null}
+            onAClick={() => handleButtonClick(student.id, "A")}
+            onRClick={() => handleButtonClick(student.id, "R")}
+            onFClick={() => handleButtonClick(student.id, "F")}
           />
         );
       })}
@@ -255,9 +279,10 @@ export const AttendanceListComponent = ({
                 isConvalidated={true}
                 rCount={record.rCount}
                 fCount={record.fCount}
+                selectedButton={null}
+                onAClick={() => {}}
                 onRClick={() => {}}
                 onFClick={() => {}}
-                onAClick={() => {}}
               />
             );
           })}
