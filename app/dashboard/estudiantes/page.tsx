@@ -155,12 +155,11 @@ export default function EstudiantesPage() {
             ) : (
               <div className="space-y-2">
                 {filteredStudents.map((student) => (
-                  <button
+                  <div
                     key={student.id}
-                    onClick={() => handleStudentClick(student.id)}
-                    className="w-full text-left p-4 rounded-lg border border-gray-200 hover:bg-slate-50 dark:hover:bg-slate-900 dark:border-gray-700 transition-colors flex justify-between items-center"
+                    className="w-full p-4 rounded-lg border border-gray-200 hover:bg-slate-50 dark:hover:bg-slate-900 dark:border-gray-700 transition-colors flex justify-between items-center"
                   >
-                    <div>
+                    <div className="flex-1">
                       <p className="font-medium">
                         {student.name} {student.surname}
                       </p>
@@ -168,10 +167,10 @@ export default function EstudiantesPage() {
                         ID: {student.id} • Grup: {student.groupName}
                       </p>
                     </div>
-                    <Button variant="outline" size="sm">
+                    <Button variant="outline" size="sm" onClick={() => handleStudentClick(student.id)}>
                       Veure Fitxer
                     </Button>
-                  </button>
+                  </div>
                 ))}
               </div>
             )}
