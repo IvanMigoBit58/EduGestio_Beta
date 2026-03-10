@@ -168,7 +168,7 @@ export default function EstudiantesPage() {
                       </p>
                     </div>
                     <Button variant="outline" size="sm" onClick={() => handleStudentClick(student.id)}>
-                      Veure Fitxer
+                      Veure Fitxa
                     </Button>
                   </div>
                 ))}
