@@ -69,6 +69,12 @@ export function Sidebar({ className }: SidebarProps) {
       active: pathname === "/dashboard/qualificacions",
     },
     {
+      label: "Fitxers d'Estudiants",
+      icon: Users,
+      href: "/dashboard/estudiantes",
+      active: pathname.startsWith("/dashboard/estudiantes"),
+    },
+    {
       label: t("sidebar.schedules"),
       icon: CalendarRange,
       href: "/dashboard/horaris",
