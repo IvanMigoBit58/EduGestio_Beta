@@ -80,7 +80,7 @@ export default function StudentDetailPage() {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
+          <TabsList className="grid w-full grid-cols-4 lg:grid-cols-7">
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="pagament">Pagament</TabsTrigger>
             <TabsTrigger value="incidents">Incidents</TabsTrigger>
@@ -88,7 +88,6 @@ export default function StudentDetailPage() {
             <TabsTrigger value="qualificacions">Qualificacions</TabsTrigger>
             <TabsTrigger value="assistencia">Assistència</TabsTrigger>
             <TabsTrigger value="comunicacio">Comunicació</TabsTrigger>
-            <TabsTrigger value="substitucions">Substitucions</TabsTrigger>
           </TabsList>
 
           {/* General Data Tab */}
@@ -526,47 +525,6 @@ export default function StudentDetailPage() {
             </Card>
           </TabsContent>
 
-          {/* Substitutions Tab */}
-          <TabsContent value="substitucions" className="space-y-4 mt-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Substitucions i Permisos</CardTitle>
-                <CardDescription>Informació sobre substitucions assignades a aquest estudiant</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-4 border rounded-lg bg-blue-50 dark:bg-blue-900/20">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-1">
-                      <p className="font-medium">Sortida Didàctica - Museu Nacional</p>
-                      <p className="text-sm text-muted-foreground mt-1">25/02/2025</p>
-                      <p className="text-sm mt-2">
-                        Professor substitut assignat: <span className="font-medium">Pere Sáez</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Sortides i Activitats</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="p-4 border rounded flex items-center justify-between">
-                    <div>
-                      <p className="font-medium">Sortida a l'Ajuntament</p>
-                      <p className="text-sm text-muted-foreground">22/01/2025</p>
-                    </div>
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded dark:bg-green-900 dark:text-green-200">
-                      Confirmada
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
         </Tabs>
       </div>
     </PageLayout>
