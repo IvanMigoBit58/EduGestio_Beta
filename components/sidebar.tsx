@@ -69,7 +69,7 @@ export function Sidebar({ className }: SidebarProps) {
       active: pathname === "/dashboard/qualificacions",
     },
     {
-      label: "Fitxers d'Estudiants",
+      label: "Fitxes Estudiants",
       icon: Users,
       href: "/dashboard/estudiantes",
       active: pathname.startsWith("/dashboard/estudiantes"),
