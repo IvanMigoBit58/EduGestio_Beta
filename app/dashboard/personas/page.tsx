@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation"
 import { PageLayout } from "@/components/page-layout"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,6 +13,7 @@ import { useI18n } from "@/lib/i18n-context"
 
 export default function PersonasPage() {
   const { t } = useI18n()
+  const router = useRouter()
 
   return (
     <PageLayout title={t("people.title")} description={t("people.description")}>
@@ -116,7 +118,7 @@ export default function PersonasPage() {
                         </Badge>
                       </div>
                       <div className="flex justify-end space-x-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => router.push("/dashboard/personas/maria-lopez-1")}>
                           {t("people.viewDetails")}
                         </Button>
                         <Button variant="outline" size="sm">
@@ -137,7 +139,7 @@ export default function PersonasPage() {
                         </Badge>
                       </div>
                       <div className="flex justify-end space-x-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => router.push("/dashboard/personas/pedro-sanchez-1")}>
                           {t("people.viewDetails")}
                         </Button>
                         <Button variant="outline" size="sm">
@@ -158,7 +160,7 @@ export default function PersonasPage() {
                         </Badge>
                       </div>
                       <div className="flex justify-end space-x-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => router.push("/dashboard/personas/ana-rodriguez-1")}>
                           {t("people.viewDetails")}
                         </Button>
                         <Button variant="outline" size="sm">
@@ -177,7 +179,7 @@ export default function PersonasPage() {
                         <Badge variant="outline">{t("people.status.temporaryLeave")}</Badge>
                       </div>
                       <div className="flex justify-end space-x-2">
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" onClick={() => router.push("/dashboard/personas/carlos-gomez-1")}>
                           {t("people.viewDetails")}
                         </Button>
                         <Button variant="outline" size="sm">
