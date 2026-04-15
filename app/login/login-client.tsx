@@ -104,16 +104,25 @@ export function LoginClient() {
             <p>{t("auth.testUsers")}:</p>
             <div className="mt-2 grid grid-cols-2 gap-2">
               <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("admin")}>
-                {t("auth.admin")}
+                Administrador
               </Button>
-              <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("profesor")}>
-                {t("auth.teacher")}
+              <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("coordinator")}>
+                Coordinador/a
               </Button>
               <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("tutor")}>
-                {t("auth.tutor")}
+                Tutor
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("profesor")}>
+                Professor
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("pas")}>
+                PAS
               </Button>
               <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("alumno")}>
-                {t("auth.student")}
+                Estudiant
+              </Button>
+              <Button variant="outline" size="sm" onClick={() => handleTestUserLogin("familia")}>
+                Família
               </Button>
             </div>
           </div>
