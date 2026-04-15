@@ -68,7 +68,7 @@ const rolePermissions = {
   ],
 }
 
-// Usuarios de prueba
+// Usuarios de prueba con nuevos roles RBAC
 const USERS = {
   admin: {
     id: "1",
@@ -76,16 +76,16 @@ const USERS = {
     password: "password",
     name: "Administrador",
     email: "admin@example.com",
-    role: ROLES.ADMIN,
+    role: "administrator" as const,
     language: "ca",
   },
   profesor: {
     id: "2",
     username: "profesor",
     password: "password",
-    name: "Profesor",
+    name: "Professor",
     email: "profesor@example.com",
-    role: ROLES.PROFESOR,
+    role: "professor" as const,
     language: "ca",
   },
   tutor: {
@@ -94,16 +94,43 @@ const USERS = {
     password: "password",
     name: "Tutor",
     email: "tutor@example.com",
-    role: ROLES.TUTOR,
+    role: "tutor" as const,
+    language: "ca",
+  },
+  coordinator: {
+    id: "5",
+    username: "coordinator",
+    password: "password",
+    name: "Coordinador/a",
+    email: "coordinator@example.com",
+    role: "coordinator" as const,
+    language: "ca",
+  },
+  pas: {
+    id: "6",
+    username: "pas",
+    password: "password",
+    name: "PAS",
+    email: "pas@example.com",
+    role: "pas" as const,
     language: "ca",
   },
   alumno: {
     id: "4",
     username: "alumno",
     password: "password",
-    name: "Alumno",
+    name: "Estudiant",
     email: "alumno@example.com",
-    role: ROLES.ALUMNO,
+    role: "student" as const,
+    language: "ca",
+  },
+  familia: {
+    id: "7",
+    username: "familia",
+    password: "password",
+    name: "Familia",
+    email: "familia@example.com",
+    role: "family" as const,
     language: "ca",
   },
 }
@@ -114,7 +141,7 @@ export type User = {
   username: string
   name: string
   email: string
-  role: string
+  role: "professor" | "tutor" | "coordinator" | "administrator" | "pas" | "student" | "family"
   language: string
 }
 
