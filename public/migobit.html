@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MigoBit — Soluciones Digitales & Informática</title>
+  <meta name="description" content="MigoBit ofrece soluciones digitales, mantenimiento informático y hosting VPS para centros educativos, PyMEs y autónomos. Tecnología accesible para cada negocio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #050d1a;
+      --navy-2:    #071225;
+      --navy-3:    #0a1a30;
+      --blue-dark: #0d2a50;
+      --blue-mid:  #1650a8;
+      --blue:      #1a72f5;
+      --blue-2:    #2e8bff;
+      --cyan:      #00cfff;
+      --cyan-2:    #00f0ff;
+      --white:     #ffffff;
+      --gray-100:  #e8f0fe;
+      --gray-200:  #c6d6f5;
+      --gray-500:  #7090c0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy-2); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ─── UTILITIES ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section   { padding: 100px 0; }
+    .section-sm { padding: 70px 0; }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--blue-2), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(26, 114, 245, 0.12);
+      border: 1px solid rgba(26, 114, 245, 0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--cyan);
+      margin-bottom: 20px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform: scale(1); }
+      50%      { opacity:0.5; transform: scale(0.7); }
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.1rem; color: var(--gray-200);
+      max-width: 560px; line-height: 1.7;
+    }
+    .text-center { text-align: center; }
+    .text-center .section-sub { margin: 0 auto; }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px; border-radius: 10px;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      transition: all 0.25s; text-decoration: none; border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(26,114,245,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(26,114,245,0.55);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid rgba(26,114,245,0.5);
+      color: var(--gray-100);
+    }
+    .btn-outline:hover {
+      border-color: var(--blue-2);
+      background: rgba(26,114,245,0.08);
+      color: #fff;
+    }
+
+    /* ─── GLASS CARD ─── */
+    .glass {
+      background: rgba(10, 26, 48, 0.6);
+      border: 1px solid rgba(26, 114, 245, 0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+    }
+    .glass:hover {
+      border-color: rgba(26, 114, 245, 0.4);
+      box-shadow: 0 0 24px rgba(26,114,245,0.1);
+    }
+
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 16px 0;
+      transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
+    }
+    #navbar.scrolled {
+      background: rgba(5, 13, 26, 0.92);
+      backdrop-filter: blur(20px);
+      padding: 12px 0;
+      box-shadow: 0 1px 0 rgba(26,114,245,0.2);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo img { height: 44px; width: auto; }
+    .nav-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+      background: linear-gradient(135deg, #fff, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      color: var(--gray-200); font-size: 0.9rem; font-weight: 500;
+      text-decoration: none; transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+      height: 2px; background: var(--cyan);
+      transform: scaleX(0); transition: transform 0.25s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta { display: flex; align-items: center; gap: 12px; }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--gray-100); border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(5,13,26,0.97);
+      padding: 100px 24px 40px;
+      flex-direction: column; align-items: center; gap: 32px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--gray-100); font-size: 1.3rem; font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta .btn-outline { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      padding-top: 80px;
+    }
+
+    #hero-canvas {
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(26,114,245,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,114,245,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-glow-1 {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(26,114,245,0.18) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      animation: float-glow 8s ease-in-out infinite;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,207,255,0.12) 0%, transparent 70%);
+      bottom: -50px; left: -50px;
+      animation: float-glow 10s ease-in-out infinite reverse;
+    }
+    @keyframes float-glow {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(30px, -30px); }
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .hero-eyebrow { margin-bottom: 24px; }
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800; line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--gray-200); line-height: 1.8;
+      margin-bottom: 40px; max-width: 480px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(26,114,245,0.2);
+    }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem; font-weight: 700; color: var(--cyan);
+    }
+    .stat-lbl { font-size: 0.82rem; color: var(--gray-500); margin-top: 2px; }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative; display: flex;
+      justify-content: center; align-items: center;
+    }
+    .hero-logo-wrap {
+      position: relative;
+      width: 320px; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-logo-wrap::before,
+    .hero-logo-wrap::after {
+      content: '';
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(26,114,245,0.25);
+      animation: ring-spin 12s linear infinite;
+    }
+    .hero-logo-wrap::before {
+      width: 280px; height: 280px;
+      animation-duration: 12s;
+    }
+    .hero-logo-wrap::after {
+      width: 350px; height: 350px;
+      border-color: rgba(0,207,255,0.15);
+      animation-duration: 18s;
+      animation-direction: reverse;
+    }
+    @keyframes ring-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .hero-logo {
+      width: 200px; height: auto;
+      filter: drop-shadow(0 0 30px rgba(0,207,255,0.4));
+      animation: logo-float 4s ease-in-out infinite;
+    }
+    @keyframes logo-float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+    .orbit-dot {
+      position: absolute;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+    .orbit-dot-1 { top: 10px; left: 50%; animation: orbit-1 8s linear infinite; }
+    .orbit-dot-2 { bottom: 30px; right: 30px; animation: orbit-2 6s linear infinite; }
+    @keyframes orbit-1 {
+      from { transform: rotate(0deg) translateX(140px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(140px) rotate(-360deg); }
+    }
+    @keyframes orbit-2 {
+      from { transform: rotate(45deg) translateX(175px) rotate(-45deg); }
+      to   { transform: rotate(405deg) translateX(175px) rotate(-405deg); }
+    }
+
+    .tech-pill {
+      position: absolute;
+      background: rgba(10,26,48,0.85);
+      border: 1px solid rgba(26,114,245,0.35);
+      border-radius: 100px;
+      padding: 8px 16px; font-size: 0.8rem; font-weight: 600;
+      color: var(--gray-100);
+      display: flex; align-items: center; gap: 8px;
+      backdrop-filter: blur(8px);
+      animation: pill-float 5s ease-in-out infinite;
+    }
+    .tech-pill svg { color: var(--cyan); }
+    .tech-pill-1 { top: 20px; left: -40px; animation-delay: 0s; }
+    .tech-pill-2 { bottom: 40px; left: -20px; animation-delay: 1.5s; }
+    .tech-pill-3 { top: 50%; right: -30px; transform: translateY(-50%); animation-delay: 3s; }
+    @keyframes pill-float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    .tech-pill-3 { animation: pill-float-3 5s ease-in-out 3s infinite; }
+    @keyframes pill-float-3 {
+      0%,100% { transform: translateY(-50%); }
+      50%      { transform: translateY(calc(-50% - 8px)); }
+    }
+
+    @media (max-width: 900px) {
+      .hero-content { grid-template-columns: 1fr; text-align: center; }
+      .hero-sub { margin: 0 auto 40px; }
+      .hero-actions { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-visual { margin-top: 40px; }
+      .tech-pill-1,.tech-pill-2,.tech-pill-3 { display: none; }
+    }
+
+    /* ═══════════════════════════════════════
+       CLIENTS / WHO IS THIS FOR
+    ═══════════════════════════════════════ */
+    #clientes { background: var(--navy-2); }
+
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px; margin-top: 60px;
+    }
+    .client-card {
+      padding: 32px 24px; border-radius: 16px; text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .client-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(26,114,245,0.15);
+    }
+    .client-icon {
+      width: 64px; height: 64px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+      box-shadow: 0 4px 16px rgba(26,114,245,0.3);
+    }
+    .client-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.05rem; margin-bottom: 10px;
+    }
+    .client-desc { font-size: 0.88rem; color: var(--gray-500); line-height: 1.6; }
+
+    /* ═══════════════════════════════════════
+       SERVICES
+    ═══════════════════════════════════════ */
+    #servicios { background: var(--navy); }
+
+    .services-intro {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: end; margin-bottom: 64px;
+    }
+    @media (max-width: 768px) {
+      .services-intro { grid-template-columns: 1fr; }
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .service-card {
+      padding: 36px 32px; border-radius: 16px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      transform: scaleX(0); transition: transform 0.3s;
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(26,114,245,0.15);
+    }
+    .service-icon {
+      width: 56px; height: 56px;
+      background: rgba(26,114,245,0.12);
+      border: 1px solid rgba(26,114,245,0.25);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 24px;
+      transition: background 0.3s;
+    }
+    .service-card:hover .service-icon {
+      background: rgba(26,114,245,0.22);
+    }
+    .service-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 1.15rem; margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 0.9rem; color: var(--gray-500); line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag {
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 0.75rem; font-weight: 600;
+      background: rgba(26,114,245,0.1);
+      border: 1px solid rgba(26,114,245,0.2);
+      color: var(--blue-2);
+    }
+
+    /* ═══════════════════════════════════════
+       VPS PLANS
+    ═══════════════════════════════════════ */
+    #vps { background: var(--navy-2); }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 60px; align-items: start;
+    }
+    .plan-card {
+      border-radius: 20px; padding: 36px 32px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .plan-card:hover { transform: translateY(-6px); }
+
+    .plan-card.featured {
+      background: linear-gradient(160deg, #0d2a50, #0a1a30);
+      border: 1px solid rgba(26,114,245,0.5) !important;
+      box-shadow: 0 0 60px rgba(26,114,245,0.15);
+    }
+    .plan-badge {
+      position: absolute; top: 20px; right: 20px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #fff; font-size: 0.72rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .plan-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem; font-weight: 600;
+      color: var(--gray-200); margin-bottom: 8px;
+    }
+    .plan-price {
+      display: flex; align-items: flex-end; gap: 4px;
+      margin-bottom: 8px;
+    }
+    .plan-amount {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--blue-2), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+    .plan-period {
+      font-size: 0.85rem; color: var(--gray-500);
+      padding-bottom: 6px;
+    }
+    .plan-tagline {
+      font-size: 0.88rem; color: var(--gray-500);
+      margin-bottom: 28px; line-height: 1.5;
+    }
+    .plan-divider {
+      height: 1px;
+      background: rgba(26,114,245,0.2);
+      margin-bottom: 28px;
+    }
+    .plan-features { list-style: none; margin-bottom: 32px; }
+    .plan-features li {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 0; font-size: 0.9rem; color: var(--gray-200);
+    }
+    .feat-check {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(0,207,255,0.15);
+      border: 1px solid rgba(0,207,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; color: var(--cyan);
+    }
+    .plan-features li.disabled {
+      opacity: 0.38;
+    }
+    .plan-features li.disabled .feat-check {
+      background: rgba(112,144,192,0.1);
+      border-color: rgba(112,144,192,0.2);
+      color: var(--gray-500);
+    }
+
+    .plan-note {
+      text-align: center; margin-top: 40px;
+      font-size: 0.9rem; color: var(--gray-500);
+    }
+    .plan-note a { color: var(--blue-2); text-decoration: none; }
+    .plan-note a:hover { text-decoration: underline; }
+
+    /* ═══════════════════════════════════════
+       MAINTENANCE
+    ═══════════════════════════════════════ */
+    #mantenimiento { background: var(--navy); }
+
+    .maint-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; margin-top: 60px;
+    }
+    @media (max-width: 768px) {
+      .maint-grid { grid-template-columns: 1fr; }
+    }
+    .maint-features { display: flex; flex-direction: column; gap: 20px; }
+    .maint-item {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 24px; border-radius: 14px;
+      transition: background 0.3s;
+    }
+    .maint-item:hover {
+      background: rgba(26,114,245,0.07);
+    }
+    .maint-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem; font-weight: 800;
+      color: rgba(26,114,245,0.25);
+      line-height: 1; flex-shrink: 0; width: 50px;
+    }
+    .maint-item-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; margin-bottom: 6px;
+    }
+    .maint-item-desc {
+      font-size: 0.88rem; color: var(--gray-500); line-height: 1.6;
+    }
+
+    .maint-visual {
+      position: relative;
+    }
+    .maint-card-big {
+      padding: 40px; border-radius: 20px;
+    }
+    .maint-card-icon { font-size: 3rem; margin-bottom: 20px; }
+    .maint-card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 12px;
+    }
+    .maint-card-desc {
+      color: var(--gray-500); line-height: 1.7; margin-bottom: 32px;
+    }
+    .maint-zones {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .zone-chip {
+      padding: 6px 16px; border-radius: 100px;
+      background: rgba(26,114,245,0.1);
+      border: 1px solid rgba(26,114,245,0.2);
+      font-size: 0.82rem; color: var(--blue-2); font-weight: 500;
+    }
+    .maint-floating {
+      position: absolute; top: -16px; right: -16px;
+      padding: 20px 24px; border-radius: 14px;
+      background: rgba(5,13,26,0.9);
+      border: 1px solid rgba(0,207,255,0.3);
+      backdrop-filter: blur(10px);
+    }
+    .maint-floating-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem; font-weight: 800; color: var(--cyan);
+    }
+    .maint-floating-lbl { font-size: 0.78rem; color: var(--gray-500); }
+
+    /* ═══════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════ */
+    #about { background: var(--navy-3); }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr;
+      gap: 80px; align-items: center;
+    }
+    @media (max-width: 900px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    .about-avatar-wrap {
+      position: relative; display: flex;
+      flex-direction: column; align-items: center;
+    }
+    .about-logo-big {
+      width: 200px; height: 200px; border-radius: 24px;
+      background: linear-gradient(135deg, var(--navy-2), var(--blue-dark));
+      border: 2px solid rgba(26,114,245,0.3);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 60px rgba(26,114,245,0.2);
+    }
+    .about-logo-big img { width: 150px; }
+    .about-name-card {
+      padding: 20px 32px; border-radius: 14px;
+      text-align: center; width: 100%;
+    }
+    .about-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 4px;
+    }
+    .about-role { font-size: 0.88rem; color: var(--cyan); }
+
+    .about-body .section-title { margin-bottom: 20px; }
+    .about-text {
+      color: var(--gray-200); line-height: 1.8; margin-bottom: 16px;
+    }
+    .about-vals {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-top: 32px;
+    }
+    .val-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px; border-radius: 12px;
+      background: rgba(26,114,245,0.06);
+      border: 1px solid rgba(26,114,245,0.12);
+    }
+    .val-icon { font-size: 1.3rem; }
+    .val-text { font-size: 0.88rem; font-weight: 600; }
+
+    /* ═══════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════ */
+    #contacto {
+      background: var(--navy-2);
+    }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      gap: 60px; margin-top: 60px; align-items: start;
+    }
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    .contact-info-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem; font-weight: 700; margin-bottom: 16px;
+    }
+    .contact-info-desc {
+      color: var(--gray-500); line-height: 1.7; margin-bottom: 36px;
+    }
+    .contact-items { display: flex; flex-direction: column; gap: 20px; }
+    .contact-item {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .contact-item-icon {
+      width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+      background: rgba(26,114,245,0.12);
+      border: 1px solid rgba(26,114,245,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .contact-item-label { font-size: 0.78rem; color: var(--gray-500); }
+    .contact-item-value { font-weight: 600; color: var(--gray-100); }
+
+    /* Form */
+    .contact-form {
+      padding: 40px; border-radius: 20px;
+    }
+    .form-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: 28px;
+    }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.85rem; font-weight: 600;
+      color: var(--gray-200); margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; padding: 13px 16px;
+      background: rgba(5,13,26,0.8);
+      border: 1.5px solid rgba(26,114,245,0.2);
+      border-radius: 10px;
+      color: var(--white); font-size: 0.9rem; font-family: 'Inter', sans-serif;
+      transition: border-color 0.25s, box-shadow 0.25s;
+      outline: none;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(26,114,245,0.12);
+    }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-group select option { background: var(--navy); }
+
+    /* Send state */
+    .form-success {
+      display: none; text-align: center; padding: 24px;
+      background: rgba(0,207,255,0.08);
+      border: 1px solid rgba(0,207,255,0.25);
+      border-radius: 12px; margin-top: 16px;
+      color: var(--cyan); font-weight: 600;
+    }
+    .form-success.show { display: block; }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      background: var(--navy);
+      border-top: 1px solid rgba(26,114,245,0.15);
+      padding: 60px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    .footer-brand { }
+    .footer-logo {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; text-decoration: none;
+    }
+    .footer-logo img { height: 40px; }
+    .footer-logo-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem; font-weight: 700; color: #fff;
+    }
+    .footer-tagline {
+      font-size: 0.88rem; color: var(--gray-500); line-height: 1.6;
+      max-width: 280px; margin-bottom: 24px;
+    }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-btn {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(26,114,245,0.1);
+      border: 1px solid rgba(26,114,245,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gray-200); text-decoration: none; font-size: 1rem;
+      transition: all 0.2s;
+    }
+    .social-btn:hover {
+      background: rgba(26,114,245,0.2);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .footer-col-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 0.9rem; margin-bottom: 16px;
+      color: var(--gray-100);
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a {
+      color: var(--gray-500); font-size: 0.88rem; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--blue-2); }
+
+    .footer-bottom {
+      padding-top: 32px;
+      border-top: 1px solid rgba(26,114,245,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--gray-500); }
+    .footer-copy a { color: var(--blue-2); text-decoration: none; }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { font-size: 0.82rem; color: var(--gray-500); text-decoration: none; }
+    .footer-legal a:hover { color: var(--gray-200); }
+
+    /* ═══════════════════════════════════════
+       MISC ANIMATIONS
+    ═══════════════════════════════════════ */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    .back-to-top {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 46px; height: 46px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-2));
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none;
+      box-shadow: 0 4px 16px rgba(26,114,245,0.4);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      color: #fff; font-size: 1.2rem; text-decoration: none;
+    }
+    .back-to-top.show { opacity: 1; pointer-events: all; }
+    .back-to-top:hover { transform: translateY(-3px); }
+
+    /* Dividers */
+    .wave-divider { line-height: 0; }
+    .wave-divider svg { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <img src="/migobit-logo.png" alt="MigoBit Logo" />
+        <span class="nav-logo-text">MigoBit</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#clientes">Clientes</a></li>
+        <li><a href="#vps">Hosting VPS</a></li>
+        <li><a href="#mantenimiento">Mantenimiento</a></li>
+        <li><a href="#about">Sobre mí</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contacto" class="btn btn-outline" style="padding:10px 20px; font-size:0.85rem;">Contactar</a>
+        <a href="#contacto" class="btn btn-primary" style="padding:10px 20px; font-size:0.85rem;">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
+          Solicitar presupuesto
+        </a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#servicios"      onclick="closeMobile()">Servicios</a>
+  <a href="#clientes"       onclick="closeMobile()">Para quién</a>
+  <a href="#vps"            onclick="closeMobile()">Hosting VPS</a>
+  <a href="#mantenimiento"  onclick="closeMobile()">Mantenimiento</a>
+  <a href="#about"          onclick="closeMobile()">Sobre mí</a>
+  <a href="#contacto" class="btn btn-primary" onclick="closeMobile()">Solicitar presupuesto</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="container">
+    <div class="hero-content">
+      <!-- Text -->
+      <div class="hero-text fade-up">
+        <div class="hero-eyebrow">
+          <span class="badge">
+            <span class="badge-dot"></span>
+            Soluciones digitales & Informática
+          </span>
+        </div>
+        <h1 class="hero-title">
+          Tecnología al servicio<br/>
+          de tu <span class="gradient-text">negocio</span>
+        </h1>
+        <p class="hero-sub">
+          Digitaliza tu empresa, automatiza procesos y mantén tu infraestructura
+          IT en perfectas condiciones. Soluciones a medida para centros educativos,
+          PyMEs y autónomos.
+        </p>
+        <div class="hero-actions">
+          <a href="#servicios" class="btn btn-primary">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Ver servicios
+          </a>
+          <a href="#contacto" class="btn btn-outline">Contactar</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="stat-num">+5 años</div>
+            <div class="stat-lbl">de experiencia</div>
+          </div>
+          <div>
+            <div class="stat-num">100%</div>
+            <div class="stat-lbl">soporte personalizado</div>
+          </div>
+          <div>
+            <div class="stat-num">24/7</div>
+            <div class="stat-lbl">monitoreo VPS</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="hero-visual fade-up" style="transition-delay:0.2s">
+        <div class="hero-logo-wrap">
+          <img src="/migobit-logo.png" alt="MigoBit" class="hero-logo" />
+          <span class="orbit-dot orbit-dot-1"></span>
+          <span class="orbit-dot orbit-dot-2" style="background:var(--blue-2);box-shadow:0 0 10px var(--blue-2)"></span>
+        </div>
+
+        <div class="tech-pill tech-pill-1">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Páginas web
+        </div>
+        <div class="tech-pill tech-pill-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          VPS dedicado
+        </div>
+        <div class="tech-pill tech-pill-3">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+          Soporte IT
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLIENTES ═══ -->
+<section id="clientes" class="section">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="badge"><span class="badge-dot"></span> ¿Para quién?</span>
+      <h2 class="section-title">Soluciones para cada tipo de negocio</h2>
+      <p class="section-sub">
+        Tanto si eres autónomo, tienes un centro educativo o diriges una pequeña empresa,
+        en MigoBit tenemos la solución perfecta para ti.
+      </p>
+    </div>
+
+    <div class="clients-grid">
+      <div class="client-card glass fade-up">
+        <div class="client-icon">🏫</div>
+        <div class="client-name">Centros Educativos</div>
+        <div class="client-desc">Colegios, academias e institutos que necesitan gestión digital, plataformas e-learning y soporte informático.</div>
+      </div>
+      <div class="client-card glass fade-up" style="transition-delay:.1s">
+        <div class="client-icon">🏢</div>
+        <div class="client-name">PyMEs</div>
+        <div class="client-desc">Pequeñas y medianas empresas que buscan digitalizarse, mejorar su presencia online y optimizar procesos.</div>
+      </div>
+      <div class="client-card glass fade-up" style="transition-delay:.2s">
+        <div class="client-icon">💼</div>
+        <div class="client-name">Autónomos</div>
+        <div class="client-desc">Profesionales independientes que necesitan una web, herramientas digitales y soporte técnico sin complicaciones.</div>
+      </div>
+      <div class="client-card glass fade-up" style="transition-delay:.3s">
+        <div class="client-icon">🚀</div>
+        <div class="client-name">Startups</div>
+        <div class="client-desc">Empresas en crecimiento que necesitan infraestructura fiable, escalable y un partner tecnológico de confianza.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICIOS ═══ -->
+<section id="servicios" class="section">
+  <div class="container">
+    <div class="services-intro fade-up">
+      <div>
+        <span class="badge"><span class="badge-dot"></span> Servicios</span>
+        <h2 class="section-title">Todo lo que necesitas en un solo lugar</h2>
+      </div>
+      <div>
+        <p class="section-sub" style="max-width:100%">
+          Desde el desarrollo de tu presencia digital hasta el mantenimiento
+          de tus equipos in situ — cubro todo el ciclo tecnológico de tu negocio.
+        </p>
+      </div>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card glass fade-up">
+        <div class="service-icon">🌐</div>
+        <div class="service-title">Desarrollo Web</div>
+        <div class="service-desc">Diseño y desarrollo de páginas web modernas, tiendas online, landing pages y plataformas a medida con tecnologías actuales.</div>
+        <div class="service-tags">
+          <span class="tag">React / Next.js</span>
+          <span class="tag">WordPress</span>
+          <span class="tag">WooCommerce</span>
+        </div>
+      </div>
+
+      <div class="service-card glass fade-up" style="transition-delay:.1s">
+        <div class="service-icon">📱</div>
+        <div class="service-title">Digitalización Empresarial</div>
+        <div class="service-desc">Implantación de software de gestión, automatización de procesos internos y migración a la nube para mejorar la productividad.</div>
+        <div class="service-tags">
+          <span class="tag">CRM / ERP</span>
+          <span class="tag">Google Workspace</span>
+          <span class="tag">Automatización</span>
+        </div>
+      </div>
+
+      <div class="service-card glass fade-up" style="transition-delay:.2s">
+        <div class="service-icon">☁️</div>
+        <div class="service-title">Hosting & VPS</div>
+        <div class="service-desc">Servidores VPS con recursos garantizados, alto rendimiento y panel de control intuitivo. Uptime 99.9% y backups automáticos.</div>
+        <div class="service-tags">
+          <span class="tag">VPS SSD NVMe</span>
+          <span class="tag">cPanel / Plesk</span>
+          <span class="tag">SSL gratis</span>
+        </div>
+      </div>
+
+      <div class="service-card glass fade-up" style="transition-delay:.3s">
+        <div class="service-icon">🔧</div>
+        <div class="service-title">Mantenimiento Informático</div>
+        <div class="service-desc">Servicio de mantenimiento presencial y remoto para empresas y autónomos: reparaciones, actualizaciones, seguridad y soporte diario.</div>
+        <div class="service-tags">
+          <span class="tag">Presencial</span>
+          <span class="tag">Remoto</span>
+          <span class="tag">Preventivo</span>
+        </div>
+      </div>
+
+      <div class="service-card glass fade-up" style="transition-delay:.4s">
+        <div class="service-icon">🎓</div>
+        <div class="service-title">Soluciones para Educación</div>
+        <div class="service-desc">Plataformas LMS, gestión de centros educativos, digitalización de aulas y soporte tecnológico especializado para el sector educativo.</div>
+        <div class="service-tags">
+          <span class="tag">LMS / e-learning</span>
+          <span class="tag">Gestión de centro</span>
+          <span class="tag">Aula digital</span>
+        </div>
+      </div>
+
+      <div class="service-card glass fade-up" style="transition-delay:.5s">
+        <div class="service-icon">🛡️</div>
+        <div class="service-title">Ciberseguridad</div>
+        <div class="service-desc">Auditorías de seguridad, copias de seguridad, protección frente a malware, antivirus corporativo y formación en buenas prácticas.</div>
+        <div class="service-tags">
+          <span class="tag">Auditoría</span>
+          <span class="tag">Backup 3-2-1</span>
+          <span class="tag">Antivirus EDR</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ VPS PLANS ═══ -->
+<section id="vps" class="section">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="badge"><span class="badge-dot"></span> Hosting VPS</span>
+      <h2 class="section-title">Planes VPS para cada necesidad</h2>
+      <p class="section-sub">
+        Servidores virtuales de alto rendimiento con discos NVMe, IPv4 dedicada
+        y soporte técnico incluido. Sin contratos anuales obligatorios.
+      </p>
+    </div>
+
+    <div class="plans-grid">
+
+      <!-- Starter -->
+      <div class="plan-card glass fade-up">
+        <div class="plan-name">VPS Starter</div>
+        <div class="plan-price">
+          <span class="plan-amount">9</span>
+          <span class="plan-period">€/mes</span>
+        </div>
+        <div class="plan-tagline">Ideal para webs personales, blogs y proyectos pequeños.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="feat-check">✓</span> 1 vCPU</li>
+          <li><span class="feat-check">✓</span> 2 GB RAM</li>
+          <li><span class="feat-check">✓</span> 30 GB NVMe SSD</li>
+          <li><span class="feat-check">✓</span> 1 TB de tráfico/mes</li>
+          <li><span class="feat-check">✓</span> 1 IPv4 dedicada</li>
+          <li><span class="feat-check">✓</span> Panel de control incluido</li>
+          <li><span class="feat-check">✓</span> Certificado SSL gratuito</li>
+          <li class="disabled"><span class="feat-check">—</span> Backup diario automático</li>
+          <li class="disabled"><span class="feat-check">—</span> Monitoreo 24/7</li>
+        </ul>
+        <a href="#contacto" class="btn btn-outline" style="width:100%;justify-content:center;">
+          Contratar Starter
+        </a>
+      </div>
+
+      <!-- Pro (featured) -->
+      <div class="plan-card featured fade-up" style="transition-delay:.15s">
+        <div class="plan-badge">Más popular</div>
+        <div class="plan-name">VPS Pro</div>
+        <div class="plan-price">
+          <span class="plan-amount">19</span>
+          <span class="plan-period">€/mes</span>
+        </div>
+        <div class="plan-tagline">Para tiendas online, portales corporativos y aplicaciones en producción.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="feat-check">✓</span> 2 vCPU</li>
+          <li><span class="feat-check">✓</span> 4 GB RAM</li>
+          <li><span class="feat-check">✓</span> 80 GB NVMe SSD</li>
+          <li><span class="feat-check">✓</span> 3 TB de tráfico/mes</li>
+          <li><span class="feat-check">✓</span> 1 IPv4 dedicada</li>
+          <li><span class="feat-check">✓</span> Panel de control incluido</li>
+          <li><span class="feat-check">✓</span> Certificado SSL gratuito</li>
+          <li><span class="feat-check">✓</span> Backup diario automático</li>
+          <li><span class="feat-check">✓</span> Monitoreo 24/7</li>
+        </ul>
+        <a href="#contacto" class="btn btn-primary" style="width:100%;justify-content:center;">
+          Contratar Pro
+        </a>
+      </div>
+
+      <!-- Business -->
+      <div class="plan-card glass fade-up" style="transition-delay:.3s">
+        <div class="plan-name">VPS Business</div>
+        <div class="plan-price">
+          <span class="plan-amount">39</span>
+          <span class="plan-period">€/mes</span>
+        </div>
+        <div class="plan-tagline">Para PyMEs y centros educativos con múltiples servicios críticos.</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li><span class="feat-check">✓</span> 4 vCPU</li>
+          <li><span class="feat-check">✓</span> 8 GB RAM</li>
+          <li><span class="feat-check">✓</span> 160 GB NVMe SSD</li>
+          <li><span class="feat-check">✓</span> Tráfico ilimitado</li>
+          <li><span class="feat-check">✓</span> 1 IPv4 + IPv6 dedicada</li>
+          <li><span class="feat-check">✓</span> Panel de control incluido</li>
+          <li><span class="feat-check">✓</span> Certificado SSL gratuito</li>
+          <li><span class="feat-check">✓</span> Backup diario automático</li>
+          <li><span class="feat-check">✓</span> Monitoreo 24/7 + alertas</li>
+        </ul>
+        <a href="#contacto" class="btn btn-outline" style="width:100%;justify-content:center;">
+          Contratar Business
+        </a>
+      </div>
+
+    </div>
+
+    <p class="plan-note fade-up">
+      ¿Necesitas un servidor dedicado o configuración personalizada?
+      <a href="#contacto">Contáctame para un presupuesto a medida →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══ MANTENIMIENTO ═══ -->
+<section id="mantenimiento" class="section">
+  <div class="container">
+    <div class="fade-up">
+      <span class="badge"><span class="badge-dot"></span> Mantenimiento IT</span>
+      <h2 class="section-title">Soporte informático<br/><span class="gradient-text">presencial y remoto</span></h2>
+    </div>
+
+    <div class="maint-grid">
+      <div class="maint-features fade-up">
+        <div class="maint-item">
+          <div class="maint-num">01</div>
+          <div>
+            <div class="maint-item-title">Mantenimiento preventivo</div>
+            <div class="maint-item-desc">Revisión periódica de equipos, limpieza de sistema, actualizaciones y detección temprana de fallos antes de que ocurran.</div>
+          </div>
+        </div>
+        <div class="maint-item">
+          <div class="maint-num">02</div>
+          <div>
+            <div class="maint-item-title">Soporte técnico presencial</div>
+            <div class="maint-item-desc">Me desplazo hasta tus instalaciones para resolver cualquier incidencia de hardware o software de forma rápida y eficaz.</div>
+          </div>
+        </div>
+        <div class="maint-item">
+          <div class="maint-num">03</div>
+          <div>
+            <div class="maint-item-title">Soporte remoto inmediato</div>
+            <div class="maint-item-desc">Acceso seguro a tus equipos para resolver problemas en minutos, sin esperas ni desplazamientos.</div>
+          </div>
+        </div>
+        <div class="maint-item">
+          <div class="maint-num">04</div>
+          <div>
+            <div class="maint-item-title">Gestión de infraestructura</div>
+            <div class="maint-item-desc">Administración de servidores, redes locales, configuración de routers, firewalls y sistemas de copias de seguridad.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="maint-visual fade-up" style="transition-delay:.2s">
+        <div class="maint-card-big glass">
+          <div class="maint-card-icon">⚙️</div>
+          <div class="maint-card-title">Contrato de mantenimiento mensual</div>
+          <div class="maint-card-desc">
+            Olvídate de los problemas informáticos del día a día. Con un contrato de mantenimiento,
+            tienes prioridad de atención, visitas programadas y un técnico de confianza siempre disponible.
+          </div>
+          <div class="maint-zones">
+            <span class="zone-chip">📍 Servicio presencial</span>
+            <span class="zone-chip">🖥️ Soporte remoto</span>
+            <span class="zone-chip">🔒 Copias de seguridad</span>
+            <span class="zone-chip">📡 Redes & Wi-Fi</span>
+            <span class="zone-chip">🖨️ Impresoras & periféricos</span>
+          </div>
+          <div style="margin-top:32px">
+            <a href="#contacto" class="btn btn-primary">Solicitar contrato</a>
+          </div>
+        </div>
+
+        <div class="maint-floating">
+          <div class="maint-floating-num">+48h</div>
+          <div class="maint-floating-lbl">tiempo máximo de respuesta<br/>en contrato premium</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-avatar-wrap fade-up">
+        <div class="about-logo-big">
+          <img src="/migobit-logo.png" alt="MigoBit" />
+        </div>
+        <div class="about-name-card glass">
+          <div class="about-name">Iván Miralles</div>
+          <div class="about-role">Fundador & Técnico — MigoBit</div>
+        </div>
+      </div>
+
+      <div class="about-body fade-up" style="transition-delay:.15s">
+        <span class="badge"><span class="badge-dot"></span> Sobre mí</span>
+        <h2 class="section-title">Tecnología con rostro humano</h2>
+        <p class="about-text">
+          Soy Iván Miralles, técnico informático autónomo especializado en dar soporte digital
+          a negocios que quieren crecer sin complicaciones tecnológicas. Fundé MigoBit con una
+          misión clara: que cualquier empresa, grande o pequeña, tenga acceso a soluciones
+          tecnológicas de calidad con un servicio cercano y de confianza.
+        </p>
+        <p class="about-text">
+          Con experiencia en desarrollo web, administración de sistemas, ciberseguridad y soporte
+          técnico presencial, acompaño a mis clientes en todo su proceso de transformación digital,
+          desde la primera web hasta la infraestructura más compleja.
+        </p>
+        <div class="about-vals">
+          <div class="val-item">
+            <span class="val-icon">🎯</span>
+            <span class="val-text">Trato personalizado</span>
+          </div>
+          <div class="val-item">
+            <span class="val-icon">⚡</span>
+            <span class="val-text">Respuesta rápida</span>
+          </div>
+          <div class="val-item">
+            <span class="val-icon">🔒</span>
+            <span class="val-text">Transparencia total</span>
+          </div>
+          <div class="val-item">
+            <span class="val-icon">📈</span>
+            <span class="val-text">Orientado a resultados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contacto" class="section">
+  <div class="container">
+    <div class="text-center fade-up">
+      <span class="badge"><span class="badge-dot"></span> Contacto</span>
+      <h2 class="section-title">¿Hablamos?</h2>
+      <p class="section-sub">
+        Cuéntame qué necesitas y te preparo una propuesta sin compromiso.
+        Respondo en menos de 24 horas.
+      </p>
+    </div>
+
+    <div class="contact-grid">
+      <!-- Info -->
+      <div class="fade-up">
+        <h3 class="contact-info-title">Información de contacto</h3>
+        <p class="contact-info-desc">
+          Puedes contactarme por email, teléfono o rellenando el formulario. Estoy disponible
+          para visitas presenciales en tu zona o reuniones online.
+        </p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">✉️</div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value">info@migobit.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📞</div>
+            <div>
+              <div class="contact-item-label">Teléfono / WhatsApp</div>
+              <div class="contact-item-value">+34 600 000 000</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">⏰</div>
+            <div>
+              <div class="contact-item-label">Horario de atención</div>
+              <div class="contact-item-value">Lun–Vie · 9:00 – 19:00 h</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div>
+              <div class="contact-item-label">Ubicación</div>
+              <div class="contact-item-value">España · Servicio presencial y remoto</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-form glass fade-up" style="transition-delay:.15s">
+        <div class="form-title">Solicitar información o presupuesto</div>
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">Nombre</label>
+              <input type="text" id="fname" placeholder="Tu nombre" required />
+            </div>
+            <div class="form-group">
+              <label for="fphone">Teléfono</label>
+              <input type="tel" id="fphone" placeholder="+34 600 000 000" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="femail">Email *</label>
+            <input type="email" id="femail" placeholder="tu@empresa.com" required />
+          </div>
+          <div class="form-group">
+            <label for="fservice">Servicio de interés</label>
+            <select id="fservice">
+              <option value="" disabled selected>Selecciona un servicio…</option>
+              <option>Desarrollo web</option>
+              <option>Digitalización empresarial</option>
+              <option>Hosting VPS</option>
+              <option>Mantenimiento informático</option>
+              <option>Soluciones para educación</option>
+              <option>Ciberseguridad</option>
+              <option>Otro / Consulta general</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="fmsg">Mensaje *</label>
+            <textarea id="fmsg" placeholder="Cuéntame en qué puedo ayudarte…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;font-size:1rem;padding:15px">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+            Enviar mensaje
+          </button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          ✅ ¡Mensaje enviado! Te responderé en menos de 24 horas. ¡Gracias!
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">
+          <img src="/migobit-logo.png" alt="MigoBit" />
+          <span class="footer-logo-text">MigoBit</span>
+        </a>
+        <p class="footer-tagline">
+          Soluciones digitales e informáticas para centros educativos, PyMEs y autónomos.
+          Tecnología accesible para todos.
+        </p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+          <a href="#" class="social-btn" aria-label="Twitter/X">𝕏</a>
+          <a href="#" class="social-btn" aria-label="GitHub">⌥</a>
+          <a href="#" class="social-btn" aria-label="WhatsApp">💬</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Servicios</div>
+        <ul class="footer-links">
+          <li><a href="#servicios">Desarrollo web</a></li>
+          <li><a href="#servicios">Digitalización</a></li>
+          <li><a href="#vps">Hosting VPS</a></li>
+          <li><a href="#mantenimiento">Mantenimiento IT</a></li>
+          <li><a href="#servicios">Ciberseguridad</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Sectores</div>
+        <ul class="footer-links">
+          <li><a href="#clientes">Centros educativos</a></li>
+          <li><a href="#clientes">PyMEs</a></li>
+          <li><a href="#clientes">Autónomos</a></li>
+          <li><a href="#clientes">Startups</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Empresa</div>
+        <ul class="footer-links">
+          <li><a href="#about">Sobre mí</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#vps">Planes VPS</a></li>
+          <li><a href="mailto:info@migobit.com">info@migobit.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">
+        © 2024 MigoBit — <a href="#about">Iván Miralles</a>. Todos los derechos reservados.
+      </div>
+      <div class="footer-legal">
+        <a href="#">Aviso legal</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<a href="#" class="back-to-top" id="backTop" aria-label="Volver arriba">
+  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+</a>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+// ─── Navbar scroll ───
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 400);
+});
+
+// ─── Hamburger menu ───
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => {
+  mobileMenu.classList.toggle('open');
+});
+function closeMobile() { mobileMenu.classList.remove('open'); }
+
+// ─── Intersection Observer (fade-up) ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ─── Canvas particle background ───
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COLORS = ['rgba(26,114,245,', 'rgba(0,207,255,', 'rgba(46,139,255,'];
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x   = Math.random() * W;
+      this.y   = Math.random() * H;
+      this.r   = Math.random() * 1.8 + 0.4;
+      this.vx  = (Math.random() - 0.5) * 0.5;
+      this.vy  = (Math.random() - 0.5) * 0.5;
+      this.col = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.a   = Math.random() * 0.5 + 0.2;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.col + this.a + ')';
+      ctx.fill();
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+  }
+
+  for (let i = 0; i < 90; i++) particles.push(new Particle());
+
+  function drawLines() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(26,114,245,${0.08 * (1 - dist/120)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    drawLines();
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ─── Contact form ───
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.textContent = 'Enviando…';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  }, 1400);
+}
+</script>
+</body>
+</html>
